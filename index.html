@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Flip Clock Online – Aesthetic Minimal Clock with Seconds</title>
+  <meta name="description" content="Beautiful flip clock online with smooth flip animations. Fullscreen, with seconds, 12/24-hour, themes, time zones, and optional lo-fi ambience. Minimal and distraction-free." />
+  <link rel="canonical" href="https://flipclock.info/" />
+  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
+  
+  <link rel="icon" type="image/png" href="img/favicon.png">
+  <link rel="preconnect" href="https://unpkg.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="/flip/flip.min.css" />
+
+  <script src="/flip/flip.min.js"></script>
+
+  <script type="application/ld+json">
+  {
+  "@context":"https://schema.org",
+  "@type":"WebApplication",
+  "name":"Flip Clock Online",
+  "url":"https://flipclock.info/",
+  "description":"A beautiful online flip clock with fullscreen mode and seconds. Minimal and fast, works on any device.",
+  "applicationCategory":"Utility",
+  "operatingSystem":"Web",
+  "inLanguage":"en",
+  "offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},
+  "featureList":["Fullscreen mode","Show/hide seconds","12/24-hour switch","Responsive layout"],
+  "publisher":{"@type":"Organization","name":"FlipClock"}
+  }
+</script>
+
+
+  <style>
+    html,body{height:100%}
+    body{margin:0;
+      display:grid;
+      place-items:center;
+      background:#000000;
+    }
+    
+   .clock{display:flex;align-items:center;gap:clamp(8px,2vw,14px)}
+   
+   .tick {
+      font-size: clamp(48px, 10vw, 160px);
+    }
+    .sep{color:#95a2ad;font-weight:600;font-size:clamp(28px,9vw,120px);line-height:1;transform:translateY(-2%)}
+    :root{
+      --tick-curve:20px;
+      --tick-shadow:1.5;
+      --tick-flip-duration:950ms;
+      --tick-flip-ease:cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    /* 铰链在翻页面板内部，覆盖在数字表面上 */
+.tick .tick-flip {
+  position: relative;
+  overflow: visible;
+  margin-left:0 !important;
+}
+
+.tick-flip-panel {
+    color: #dedede;
+    background: linear-gradient(to bottom, #111, #222);
+    /*background: linear-gradient(to bottom, #181818, #1B1B1B);*/
+
+}
+
+.tick-flip {
+            font-weight: 800;
+           font-family: system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Open Sans","Helvetica Neue" !important;
+           font-variant-numeric: tabular-nums;
+
+}
+
+
+.tick .tick-flip::before,
+.tick .tick-flip::after {
+  content: "";
+  position: absolute;
+  top: 51%;
+  width: 3%;               /* 铰链宽度 */
+  height: 14%;              /* 铰链长度，占面板高度比例 */
+  /*background: linear-gradient(to bottom, #00bcd4, #007a99); */
+  background: url("./test.png") center center / cover no-repeat;
+
+  border-radius: 2px;
+  transform: translateY(-50%);
+  z-index: 20;              /* 高于翻页层（通常 tick 内层是 10~15） */
+  pointer-events: none;
+  opacity: 0.9;             /* 稍微透明一点 */
+}
+
+/* 左右各一根 */
+.tick .tick-flip::before {
+  left: 0%;
+}
+.tick .tick-flip::after {
+  right: 0%;
+}
+
+.tick-flip-panel::after {
+  background: #000000 !important; /* 红色线 */
+  height: 2.4px !important;         /* 加粗为3px */
+  opacity: 0.8;                   /* 透明度可调 */
+  box-shadow: 
+    0 1px 0 rgba(255, 255, 255, 0.2); /* 白色柔光阴影 */
+}
+
+.visually-hidden{display: none;}
+@media (min-width: 1200px) {
+  .tick {
+    font-size: clamp(48px, 11vw, 240px);
+  }
+}
+
+@media (min-width: 1600px) {
+  .tick {
+    font-size: clamp(48px, 10vw, 220px);
+  }
+}
+
+/* 特别宽（例如4K）时再稍微加大 */
+@media (min-width: 2400px) {
+  .tick {
+    font-size: clamp(48px, 10vw, 260px);
+  }
+}
+
+.tick-credits{display: none !important;}
+/* ====== Controls（新增）====== */
+.controls{
+  position:fixed;
+  top:18px;
+  right:24px;
+  display:flex;
+  align-items:center;
+  gap:14px;
+  z-index:50;
+}
+
+.ctrl-btn{
+  width:40px;height:40px;
+  border-radius:20%;
+  display:flex;align-items:center;justify-content:center;
+  /*background:rgba(255,255,255,0.08);*/
+  color:rgba(255,255,255,0.28);
+  cursor:pointer;
+  transition:all .2s ease;
+}
+.ctrl-btn:hover{
+  /*background:rgba(255,255,255,0.35);*/
+  color:rgba(255,255,255,0.88);
+  /*transform:scale(1.1);*/
+}
+.ctrl-btn i{ font-size:22px; line-height:1; }
+
+/* ===== AM/PM 角标 ===== */
+.ampm {
+  /*position: fixed;
+  right: 24px;
+  bottom: 20px;
+  font-size: 22px;
+  color: rgba(255,255,255,0.6);
+  letter-spacing: 1px;
+  user-select: none;*/
+  font-family: "Roboto", system-ui, sans-serif;
+  transition: opacity .3s ease;
+
+  position: absolute;
+  right: -40px;   /* 往外“探”一点更像角标；想贴里侧就改成 0 */
+  bottom: 0px;   /* 想在内部就改成 0 */
+  font-size: clamp(14px, 2.8vmin, 24px);
+  color: rgba(255,255,255,0.68);
+  letter-spacing: 1px;
+  pointer-events: none;
+  user-select: none;
+  text-shadow: 0 1px 2px rgba(0,0,0,.45);
+  z-index: 5;
+}
+
+/* 默认：PC 横向一排（保持你现在的行为） */
+.clock {
+  display: flex;
+  position: relative;
+  align-items: center;
+  gap: clamp(8px, 2vw, 14px);
+ 
+}
+
+/* 移动端：改为三排（小时 / 分钟 / 秒各一排） */
+@media (max-width: 680px), (orientation: portrait) {
+  .clock {
+    flex-direction: column;              /* 关键：从横排改竖排 */
+    justify-content: center;
+    gap: clamp(16px, 4vh, 28px);         /* 行与行之间的间距 */
+    top: -5%;
+  }
+  .tick {
+    /* 小屏适配的字号，你可按需微调 */
+    font-size: clamp(44px, 34vw, 180px);
+  }
+  .controls{display: none}
+
+  /* 如果 AM/PM 角标吸附在 .clock 右下角，三排时让它稍微贴内一点 */
+  .ampm {
+
+    right: 0;         /* 以前如果是 -10px 之类的，可以收回到容器内 */
+    bottom: -40px;
+    font-size: clamp(14px, 2.8vmin, 24px);
+  }
+}
+
+
+  </style>
+</head>
+<body>
+  <h1 class="visually-hidden">Flip Clock Online</h1>
+
+  <!-- 控制按钮区（新增） -->
+<div class="controls">
+  <div id="toggle-seconds" class="ctrl-btn" title="显示/隐藏秒钟">
+  <i class="ri-timer-2-line"></i>
+</div>
+  <div id="toggle-format" class="ctrl-btn" title="切换 12/24 小时">
+    <i class="ri-24-hours-line"></i>
+  </div>
+  <div id="toggle-fullscreen" class="ctrl-btn" title="全屏显示">
+    <i class="ri-fullscreen-line"></i>
+  </div>
+
+</div>
+
+
+  <div class="clock" role="group" aria-label="当前时间">
+    <!-- 小时 -->
+    <div class="tick" data-value="00" data-did-init="setupH">
+      <div data-repeat="true" aria-hidden="true">
+        <span data-view="flip"></span>
+      </div>
+    </div>
+    <!-- <span class="sep" aria-hidden="true">:</span> -->
+    <!-- 分钟 -->
+    <div class="tick" data-value="00" data-did-init="setupM">
+      <div data-repeat="true" aria-hidden="true">
+        <span data-view="flip"></span>
+      </div>
+    </div>
+    <!-- <span class="sep" aria-hidden="true">:</span> -->
+    <!-- 秒钟 -->
+    <div class="tick" data-value="00" data-did-init="setupS">
+      <div data-repeat="true" aria-hidden="true">
+        <span data-view="flip"></span>
+      </div>
+    </div>
+     <div id="ampm" class="ampm"></div>
+  </div>
+
+  <script>
+  let hTick = null, mTick = null, sTick = null;
+  let is24h = true;
+  let showSeconds = true;
+
+  const pad = n => n < 10 ? '0' + n : '' + n;
+
+  function startClock(){
+    if(!(hTick && mTick && sTick)) return;
+    renderNow();
+    Tick.helper.interval(renderNow, 1000);
+  }
+
+  function renderNow() {
+  const now = new Date();
+  let h = now.getHours();
+  const m = pad(now.getMinutes());
+  const s = pad(now.getSeconds());
+
+  // 🌟 先定义一个字符串变量存 AM/PM
+  let ampmText = "";
+
+  if (!is24h) {
+    ampmText = h >= 12 ? "PM" : "AM";
+    h = h % 12 || 12;
+  }
+
+  hTick.value = pad(h);
+  mTick.value = m;
+  sTick.value = s;
+
+  // ✅ 更新右下角 AM/PM 标签
+  const ampmEl = document.getElementById("ampm");
+  ampmEl.textContent = is24h ? "" : ampmText;
+
+  // 可选：无障碍（原来你有 aria-label 思路，可按需恢复）
+  // hTick.root.setAttribute('aria-label', hTick.value);
+  // mTick.root.setAttribute('aria-label', mTick.value);
+  // sTick.root.setAttribute('aria-label', sTick.value);
+}
+
+
+  function setupH(t){ hTick = t; startClock(); }
+  function setupM(t){ mTick = t; startClock(); }
+  function setupS(t){ sTick = t; startClock(); }
+
+  // 切换秒钟显示
+const secBtn = document.getElementById("toggle-seconds");
+secBtn.addEventListener("click", () => {
+  showSeconds = !showSeconds;
+  document.querySelectorAll('[data-did-init="setupS"]').forEach(el => {
+    el.style.display = showSeconds ? "flex" : "none";
+  });
+  // 图标可换样式（可选）
+  secBtn.firstElementChild.className = showSeconds ? "ri-timer-2-line" : "ri-timer-2-line";
+});
+
+
+  // 切换 12/24 小时
+  const fmtBtn = document.getElementById("toggle-format");
+  fmtBtn.addEventListener("click", () => {
+    is24h = !is24h;
+    // 图标随模式变化（你也可以换成其它 ri-* 图标）
+    fmtBtn.firstElementChild.className = is24h ? "ri-24-hours-line" : "ri-24-hours-line";
+    renderNow();
+  });
+
+  // 全屏控制
+  const fsBtn = document.getElementById("toggle-fullscreen");
+  fsBtn.addEventListener("click", () => {
+    if(!document.fullscreenElement){
+      document.documentElement.requestFullscreen();
+    } else {
+      document.exitFullscreen();
+    }
+  });
+  document.addEventListener("fullscreenchange", () => {
+    fsBtn.firstElementChild.className =
+      document.fullscreenElement ? "ri-fullscreen-exit-line" : "ri-fullscreen-line";
+  });
+
+  // 监听全屏状态变化，自动隐藏/显示右上角按钮栏
+  document.addEventListener('fullscreenchange', () => {
+  const controls = document.querySelector('.controls');
+  if (document.fullscreenElement) {
+    // 进入全屏 → 淡出隐藏
+    controls.style.opacity = '0';
+    controls.style.pointerEvents = 'none';
+  } else {
+    // 退出全屏 → 恢复可见
+    controls.style.opacity = '1';
+    controls.style.pointerEvents = 'auto';
+  }
+});
+
+</script>
+
+</body>
+</html>
