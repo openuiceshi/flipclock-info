@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Flip Clock Online – Aesthetic Minimal Clock with Seconds</title>
+  <title>FlipClock | Flip Clock Online – Aesthetic Minimal Clock with Seconds</title>
   <meta name="description" content="Beautiful flip clock online with smooth flip animations. Fullscreen, themes, 12/24-hour, time zones, and optional lo-fi ambience. Minimal and distraction-free." />
   <link rel="canonical" href="https://flipclock.info/" />
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
@@ -16,8 +16,8 @@
 
   <link rel="stylesheet" href="/flip/flip.min.css" />
   <script src="/flip/flip.min.js"></script>
-  <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@pqina/flip/dist/flip.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@pqina/flip/dist/flip.min.js"></script> -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@pqina/flip/dist/flip.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@pqina/flip/dist/flip.min.js"></script>
 
   <script type="application/ld+json">
   {
@@ -519,6 +519,29 @@ body{
   let is24h = true;
   let showSeconds = true;
 
+// ==== 用户设置持久化 ====
+const SETTINGS_KEY = 'flip.settings';
+
+// 读取设置
+function loadSettings() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(SETTINGS_KEY));
+    if (saved && typeof saved === 'object') {
+      if (typeof saved.is24h === 'boolean') is24h = saved.is24h;
+      if (typeof saved.showSeconds === 'boolean') showSeconds = saved.showSeconds;
+    }
+  } catch (e) {}
+}
+
+// 保存设置
+function saveSettings() {
+  try {
+    localStorage.setItem(SETTINGS_KEY, JSON.stringify({ is24h, showSeconds }));
+  } catch (e) {}
+}
+
+
+
   const pad = n => n < 10 ? '0' + n : '' + n;
 
   function startClock(){
@@ -528,6 +551,9 @@ body{
   }
 
   function renderNow() {
+
+    // ✅ 新增：Tick 还没初始化时直接返回，避免报错导致后续监听失效
+  if (!(hTick && mTick && sTick)) return;
   const now = new Date();
   let h = now.getHours();
   const m = pad(now.getMinutes());
@@ -560,6 +586,18 @@ body{
   function setupM(t){ mTick = t; startClock(); }
   function setupS(t){ sTick = t; startClock(); }
 
+  // ==== 初始化：读配置并应用 UI ====
+loadSettings();
+
+// 根据 showSeconds 初始化“秒”的可见性（第三个 tick，选择器已存在）
+document.querySelectorAll('[data-did-init="setupS"]').forEach(el => {
+  el.style.display = showSeconds ? "flex" : "none";
+});
+
+// 用 is24h 渲染一遍（含 AM/PM 角标逻辑在 renderNow 内）
+renderNow();
+
+
   // 切换秒钟显示
 const secBtn = document.getElementById("toggle-seconds");
 secBtn.addEventListener("click", () => {
@@ -569,6 +607,9 @@ secBtn.addEventListener("click", () => {
   });
   // 图标可换样式（可选）
   secBtn.firstElementChild.className = showSeconds ? "ri-timer-2-line" : "ri-timer-2-line";
+
+  // 新增这一行：
+  saveSettings();
 });
 
 
@@ -579,6 +620,9 @@ secBtn.addEventListener("click", () => {
     // 图标随模式变化（你也可以换成其它 ri-* 图标）
     fmtBtn.firstElementChild.className = is24h ? "ri-24-hours-line" : "ri-24-hours-line";
     renderNow();
+
+     // 新增这一行：
+  saveSettings();
   });
 
   // 全屏控制
@@ -691,6 +735,9 @@ function renderColorSwatches(colors){
     div.setAttribute('title', name);
     div.style.background = hex;
 
+    // 新增 ↓↓↓
+    div.dataset.color = hex;
+
     // 选中状态
     const isSelected = hex.toLowerCase() === current;
     div.setAttribute('aria-selected', String(isSelected));
@@ -704,15 +751,17 @@ function renderColorSwatches(colors){
 
 /* 应用颜色：更新 CSS 变量 + UI 选中态 + 本地存储 */
 function selectColor(hex){
+  // 立即应用背景
   document.documentElement.style.setProperty('--theme-bg', hex);
 
-  // 切换按钮选中态
-  topicsListEl.querySelectorAll('.color-swatch').forEach(el => {
-    el.setAttribute('aria-selected', String(el.dataset.color.toLowerCase() === hex.toLowerCase()));
-  });
-
-  // 可选：把选色记下来
+  // 先保存到本地存储（就算后面 UI 更新报错，刷新也能记住）
   try { localStorage.setItem('flip.theme.bg', hex); } catch(e){}
+
+  // 再更新选中态（防止 dataset.color 为空时报错）
+  topicsListEl.querySelectorAll('.color-swatch').forEach(el => {
+    const cur = (el.dataset.color || '').toLowerCase();
+    el.setAttribute('aria-selected', String(cur === hex.toLowerCase()));
+  });
 }
 
 /* 读取已保存颜色（可选） */
