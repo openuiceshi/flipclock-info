@@ -50,7 +50,7 @@ ${urlset}
 }
 
 async function main() {
-  const outDir = path.resolve(process.cwd(), 'public'); // 目标目录
+  const outDir = process.cwd(); // 目标目录
   const outFile = path.join(outDir, 'sitemap.xml');
 
   // 确保目录存在

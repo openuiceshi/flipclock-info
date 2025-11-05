@@ -8,15 +8,16 @@
   <link rel="canonical" href="https://flipclock.info/" />
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
   
-  <link rel="icon" type="image/png" href="img/favicon.png">
+  <link rel="icon" type="/image/png" href="img/favicon.png">
   <link rel="preconnect" href="https://unpkg.com" crossorigin>
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 
   <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
 
   <link rel="stylesheet" href="/flip/flip.min.css" />
-
   <script src="/flip/flip.min.js"></script>
+  <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@pqina/flip/dist/flip.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@pqina/flip/dist/flip.min.js"></script> -->
 
   <script type="application/ld+json">
   {
@@ -96,7 +97,7 @@
   width: 3%;               /* 铰链宽度 */
   height: 14%;              /* 铰链长度，占面板高度比例 */
   /*background: linear-gradient(to bottom, #00bcd4, #007a99); */
-  background: url("img/hinge.png") center center / cover no-repeat;
+  /*background: url("img/hinge.png") center center / cover no-repeat;*/
 
   border-radius: 2px;
   transform: translateY(-50%);
@@ -224,6 +225,201 @@
     font-size: clamp(14px, 2.8vmin, 24px);
   }
 }
+ /* =========================
+     右下角浮动按钮
+     ========================= */
+  .fab {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 999;
+    width: 56px;
+    height: 56px;
+    border: none;
+    border-radius: 50%;
+    /*background: linear-gradient(135deg, #666, #333);*/
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    font-size: 22px;
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.25), inset 0 1px 2px rgba(255,255,255,0.3);
+    /*display: grid;*/
+    place-items: center;
+    transition: transform .2s ease, box-shadow .2s ease;
+  }
+  .fab:hover { transform: translateY(-2px); }
+  .fab:active { transform: translateY(0); box-shadow: 0 6px 14px rgba(0,0,0,0.25); }
+  .fab-icon {
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    line-height: 1;
+  }
+
+  /* ====================================
+     右侧滑出面板（纵向滚动，两列网格）
+     ==================================== */
+  .topics-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 998;
+    width: min(86vw, 620px);      /* 小屏 86vw，大屏至多 420px */
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(6px);
+    /*box-shadow: -10px 0 30px rgba(0,0,0,0.35);*/
+
+    transform: translateX(100%);  /* 初始在视口外 */
+    transition: transform .4s cubic-bezier(.2,.8,.2,1);
+    will-change: transform;
+    display: flex;
+    flex-direction: column;
+  }
+  .topics-panel.open { transform: translateX(0); }
+
+  .topics-header {
+    padding: 4px 14px;
+  }
+  .grabber {
+    width: 46px;
+    height: 5px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.25);
+    margin: 10px auto 6px;
+    display: none;
+  }
+
+  /* 纵向滚动容器：两列网格 */
+  .topics-list {
+    padding: 8px 14px 16px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
+    /*scrollbar-gutter: stable;*/
+    /*flex: 1;*/
+
+  }
+
+  /* 美化滚动条（可选） */
+  .topics-list::-webkit-scrollbar { width: 10px; }
+  .topics-list::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.25);
+    border-radius: 999px;
+  }
+
+  /* 主题卡片（16:9 图片，点击图片跳转） */
+  .topic-card {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0; /* 防止子元素溢出 */
+  }
+
+  .topic-card a.thumb {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;    /* 关键：16:9 */
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    background: #123a7a;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.22);
+    outline: none;
+  }
+  .topic-card a.thumb:focus-visible {
+    box-shadow: 0 0 0 3px rgba(130,190,255,0.8);
+  }
+  .topic-card a.thumb img {
+    position: absolute;
+    inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    filter: brightness(.88);
+    transition: transform .3s ease, filter .3s ease;
+  }
+  .topic-card a.thumb:hover img { transform: scale(1.04); filter: brightness(.95); }
+
+  /* 可选：图片下方小标题（不参与跳转，仅显示） */
+  .topic-caption {
+    color: #e9f2ff;
+    font-size: 12px;
+    line-height: 1.25;
+    opacity: .9;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0 2px;
+    display: none;
+  }
+
+  /* 更小的抽屉宽度时，改为单列（可选） */
+  @media (max-width: 360px) {
+    .topics-panel { width: 92vw; }
+    .topics-list { grid-template-columns: 1fr; }
+  }
+
+/* 更改主题色 */
+  :root{
+  /* 你已有的变量下面继续补 */
+  --theme-bg: #000000;           /* 默认黑 */
+  --swatch-size: 36px;
+  --swatch-gap: 10px;
+  --swatch-ring: 3px;            /* 选中时的描边宽度 */
+}
+
+/* 用变量驱动背景色 */
+body{
+  /* 原来 background:#000000; 替换为： */
+  background: var(--theme-bg);
+}
+
+/* 颜色盘容器：两列网格可保留，也可单列 */
+.topics-list{
+  /*display: grid;*/
+  grid-template-columns: repeat(3, minmax(0,1fr));  /* 每行 5 个，可自行调 
+  gap: 12px;
+}
+
+/* ——关键：把原先 .topic-card a.thumb 的“尺寸与外观控制”搬到 color-swatch —— */
+.color-swatch{
+  /* reset 按钮默认样式，避免 padding/边框影响尺寸 */
+  display: block;
+  appearance: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+
+  /* 原先卡片的“尺寸基准”在 a.thumb：width 100% + 16:9 比例 */
+  width: 100%;
+  height: 100px;
+  aspect-ratio: 16 / 9;        /* ← 就靠它保证高度 */
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+
+  /* 原先的阴影/底色 */
+  box-shadow: 0 6px 16px rgba(0,0,0,0.22);
+  /* 用自定义属性承接颜色（JS 会写 style="--swatch-color:#000"） */
+  background: var(--swatch-color, #000);
+  cursor: pointer;
+  outline: none;
+}
+
+/* 焦点可见（对齐原先 a.thumb:focus-visible 的视觉） */
+.color-swatch:focus-visible{
+  box-shadow: 0 0 0 3px rgba(130,190,255,0.8);
+}
+
+/* 选中态高亮边环（你原先没有选中态，这里新增） */
+.color-swatch[aria-selected="true"]::after{
+  content:"";
+  position:absolute; inset:-3px;
+  border-radius: inherit;
+  box-shadow: 0 0 0 3px rgba(255,255,255,.85), 0 4px 18px rgba(0,0,0,.45);
+  pointer-events:none;
+}
+
 
 
   </style>
@@ -242,7 +438,6 @@
   <div id="toggle-fullscreen" class="ctrl-btn" title="全屏显示">
     <i class="ri-fullscreen-line"></i>
   </div>
-
 </div>
 
 
@@ -269,6 +464,55 @@
     </div>
      <div id="ampm" class="ampm"></div>
   </div>
+  <!-- 右下角浮动按钮 -->
+  <button class="fab" id="toggleTopicsBtn" aria-expanded="false" aria-controls="topicsPanel" title="Open topics">
+    <span class="fab-icon">≡</span>
+  </button>
+
+  <!-- 右侧滑出面板：纵向滚动，两列网格，点击图片跳转 -->
+  <aside class="topics-panel" id="topicsPanel" aria-hidden="true">
+    <div class="topics-header">
+      <div class="grabber" aria-hidden="true"></div>
+    </div>
+
+    <div class="topics-list" id="topicsList">
+      <!-- 8 个主题（示例），图片 16:9，点击图片即可跳转 -->
+      <!-- <div class="topic-card">
+        <a class="thumb" href="https://example.com/one" target="_blank" rel="noopener">
+          <img src="img/1.jpg" alt="Topic One">
+        </a>
+        <div class="topic-caption">Topic One</div>
+      </div>
+
+      <div class="topic-card">
+        <a class="thumb" href="https://example.com/two" target="_blank" rel="noopener">
+          <img src="img/2.jpg" alt="Topic Two">
+        </a>
+        <div class="topic-caption">Topic Two</div>
+      </div>
+
+      <div class="topic-card">
+        <a class="thumb" href="https://example.com/three" target="_blank" rel="noopener">
+          <img src="img/3.jpg" alt="Topic Three">
+        </a>
+        <div class="topic-caption">Topic Three</div>
+      </div>
+
+      <div class="topic-card">
+        <a class="thumb" href="https://example.com/four" target="_blank" rel="noopener">
+          <img src="img/4.jpg" alt="Topic Four">
+        </a>
+        <div class="topic-caption">Topic Four</div>
+      </div>
+
+      <div class="topic-card">
+        <a class="thumb" href="https://example.com/five" target="_blank" rel="noopener">
+          <img src="img/1-1.jpg" alt="Topic Five">
+        </a>
+        <div class="topic-caption">Topic Five</div>
+      </div> -->
+    </div>
+  </aside>
 
   <script>
   let hTick = null, mTick = null, sTick = null;
@@ -354,16 +598,135 @@ secBtn.addEventListener("click", () => {
   // 监听全屏状态变化，自动隐藏/显示右上角按钮栏
   document.addEventListener('fullscreenchange', () => {
   const controls = document.querySelector('.controls');
+  const fab = document.querySelector('.fab'); 
   if (document.fullscreenElement) {
     // 进入全屏 → 淡出隐藏
-    controls.style.opacity = '0';
-    controls.style.pointerEvents = 'none';
+    if (controls) {
+      controls.style.opacity = '0';
+      controls.style.pointerEvents = 'none';
+    }
+    if (fab) fab.style.display = 'none';
   } else {
     // 退出全屏 → 恢复可见
-    controls.style.opacity = '1';
-    controls.style.pointerEvents = 'auto';
+    if (controls) {
+      controls.style.opacity = '1';
+      controls.style.pointerEvents = 'auto';
+    }
+    if (fab) fab.style.display = '';
   }
 });
+  /* 右侧抽屉开合控制 */
+    const toggleBtn = document.getElementById('toggleTopicsBtn');
+    const panel = document.getElementById('topicsPanel');
+
+    function togglePanel(open) {
+      const willOpen = (typeof open === 'boolean') ? open : !panel.classList.contains('open');
+      panel.classList.toggle('open', willOpen);
+      panel.setAttribute('aria-hidden', String(!willOpen));
+      toggleBtn.setAttribute('aria-expanded', String(willOpen));
+      toggleBtn.querySelector('.fab-icon').textContent = willOpen ? '×' : '≡';
+    }
+
+    toggleBtn.addEventListener('click', () => togglePanel());
+
+    // Esc 关闭
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && panel.classList.contains('open')) togglePanel(false);
+    });
+
+    // 点击外部空白关闭
+    document.addEventListener('click', (e) => {
+      const withinPanel = panel.contains(e.target);
+      const withinBtn = toggleBtn.contains(e.target);
+      if (!withinPanel && !withinBtn && panel.classList.contains('open')) {
+        togglePanel(false);
+      }
+    }, { capture: true });
+
+
+
+    /* ===== 颜色主题：渲染 & 交互 ===== */
+const DEFAULT_COLOR = '#000000'; // 默认黑
+const COLORS = [
+  { name: 'Black color', hex: '#000000' },
+  { name: 'Pink color',            hex: '#FEB1BF' },
+  { name: 'Lavender color',        hex: '#E0DFFA' },
+  { name: 'Ruby color',            hex: '#5E0A1A' },
+  { name: 'White color',           hex: '#FFFFFF' },
+
+  { name: 'Deep Blue color', hex: '#0F3A6E' },
+  { name: 'Barbie color',            hex: '#CF0071' },
+  { name: 'Mocha color',        hex: '#936451' },
+  { name: 'Silver color',            hex: '#B3B3B3' },
+  { name: 'Peach color',           hex: '#FDB087' },
+
+  { name: 'Steel color', hex: '#818385' },
+  { name: 'Fresh Green color',            hex: '#76A43B' },
+  { name: 'Coral color',        hex: '#FD574F' },
+  { name: 'Sky Blue color',           hex: '#1DA9F0' },
+
+  { name: 'Indigo color', hex: '#503E82' },
+  { name: 'Crimson color',            hex: '#AE113C' },
+  { name: 'Teal color',        hex: '#107B79' },
+  { name: 'Violet color',            hex: '#53519B' },
+  { name: 'Gold color',           hex: '#F3DB3E' },
+
+  { name: 'Emerald color',            hex: '#44C165' },
+  { name: 'Indigo color',           hex: '#39006F' },
+];
+
+const topicsListEl = document.getElementById('topicsList');
+
+/* 建立色块 */
+function renderColorSwatches(colors){
+  topicsListEl.innerHTML = ''; // 清空原内容
+
+  const current = (loadColor() || DEFAULT_COLOR).toLowerCase();
+
+  colors.forEach(({ name, hex }) => {
+    const div = document.createElement('div');
+    div.className = 'color-swatch';
+    div.setAttribute('role', 'img');
+    div.setAttribute('aria-label', name);
+    div.setAttribute('title', name);
+    div.style.background = hex;
+
+    // 选中状态
+    const isSelected = hex.toLowerCase() === current;
+    div.setAttribute('aria-selected', String(isSelected));
+
+    // 点击事件：切换颜色
+    div.addEventListener('click', () => selectColor(hex));
+
+    topicsListEl.appendChild(div);
+  });
+}
+
+/* 应用颜色：更新 CSS 变量 + UI 选中态 + 本地存储 */
+function selectColor(hex){
+  document.documentElement.style.setProperty('--theme-bg', hex);
+
+  // 切换按钮选中态
+  topicsListEl.querySelectorAll('.color-swatch').forEach(el => {
+    el.setAttribute('aria-selected', String(el.dataset.color.toLowerCase() === hex.toLowerCase()));
+  });
+
+  // 可选：把选色记下来
+  try { localStorage.setItem('flip.theme.bg', hex); } catch(e){}
+}
+
+/* 读取已保存颜色（可选） */
+function loadColor(){
+  try { return localStorage.getItem('flip.theme.bg'); } catch(e){ return null; }
+}
+
+/* 初始化 */
+(function initThemePicker(){
+  const saved = loadColor() || DEFAULT_COLOR;
+  document.documentElement.style.setProperty('--theme-bg', saved);
+  renderColorSwatches(COLORS);
+})();
+
 
 </script>
 
