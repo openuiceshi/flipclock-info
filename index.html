@@ -75,7 +75,7 @@
 }
 
 .tick-flip-panel {
-    color: #dedede;
+    color: var(--theme-fg);
     background: linear-gradient(to bottom, #111, #222);
     /*background: linear-gradient(to bottom, #181818, #1B1B1B);*/
 
@@ -294,8 +294,8 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 12px;
-    overflow-y: auto;
-    overscroll-behavior-y: contain;
+    /*overflow-y: auto;*/
+    /*overscroll-behavior-y: contain;*/
     /*scrollbar-gutter: stable;*/
     /*flex: 1;*/
 
@@ -307,6 +307,12 @@
     background: rgba(255,255,255,0.25);
     border-radius: 999px;
   }
+
+  .panel-content::-webkit-scrollbar { width: 8px; }
+  .panel-content::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,.35);
+  border-radius: 999px;
+}
 
   /* 主题卡片（16:9 图片，点击图片跳转） */
   .topic-card {
@@ -366,6 +372,7 @@
   --swatch-size: 36px;
   --swatch-gap: 10px;
   --swatch-ring: 3px;            /* 选中时的描边宽度 */
+  --theme-fg: #dedede;  /* 新增：默认字体色 */
 }
 
 /* 用变量驱动背景色 */
@@ -377,7 +384,7 @@ body{
 /* 颜色盘容器：两列网格可保留，也可单列 */
 .topics-list{
   /*display: grid;*/
-  grid-template-columns: repeat(3, minmax(0,1fr));  /* 每行 5 个，可自行调 
+  grid-template-columns: repeat(3, minmax(0,1fr));  /* 每行 5 个，可自行调 */ 
   gap: 12px;
 }
 
@@ -418,6 +425,53 @@ body{
   border-radius: inherit;
   box-shadow: 0 0 0 3px rgba(255,255,255,.85), 0 4px 18px rgba(0,0,0,.45);
   pointer-events:none;
+}
+
+
+/* ===== Drawer 内部两栏布局 ===== */
+.panel-body{
+  display:grid;
+  grid-template-columns: 180px 1fr;  /* 左 180px，右自适应 */
+  gap: 12px;
+  padding: 4px 10px 14px;
+  flex: 1;           /* ★ 占满抽屉剩余高度 */
+  min-height: 0;     /* ★ 允许内部滚动容器正确计算高度 */
+  box-sizing: border-box;
+}
+
+.panel-content{
+  min-width: 0;
+  min-height: 0;     /* ★ 搭配父容器，启用滚动 */
+  overflow-y: auto;  /* ★ 右侧内容在此滚动 */
+}
+
+
+.panel-aside{
+  display:flex;
+  flex-direction:column;
+  gap: 6px;
+  padding-top: 4px;
+}
+
+.nav-item{
+  display:flex; align-items:center; gap:10px;
+  padding:10px 12px;
+  border:none; border-radius:10px;
+  background: transparent; 
+  color: rgba(255,255,255,0.85);
+  cursor:pointer;
+  text-align:left;
+}
+.nav-item i{ font-size:18px; }
+.nav-item.active{
+  background: rgba(255,255,255,0.18);
+  color:#fff;
+}
+
+/* 小屏时让侧栏在上方呈“标签”效果 */
+@media (max-width: 480px){
+  .panel-body{ grid-template-columns: 1fr; }
+  .panel-aside{ flex-direction:row; }
 }
 
 
@@ -475,43 +529,23 @@ body{
       <div class="grabber" aria-hidden="true"></div>
     </div>
 
+    <!-- 新增：整体布局（左侧导航 + 右侧内容） -->
+<div class="panel-body">
+  <nav class="panel-aside" id="panelAside" aria-label="Theme categories">
+    <button class="nav-item active" data-target="bg">
+      <i class="ri-paint-fill"></i><span>Background</span>
+    </button>
+    <button class="nav-item" data-target="font">
+      <i class="ri-font-size"></i><span>Font</span>
+    </button>
+  </nav>
+
+  <div class="panel-content">
     <div class="topics-list" id="topicsList">
-      <!-- 8 个主题（示例），图片 16:9，点击图片即可跳转 -->
-      <!-- <div class="topic-card">
-        <a class="thumb" href="https://example.com/one" target="_blank" rel="noopener">
-          <img src="img/1.jpg" alt="Topic One">
-        </a>
-        <div class="topic-caption">Topic One</div>
-      </div>
-
-      <div class="topic-card">
-        <a class="thumb" href="https://example.com/two" target="_blank" rel="noopener">
-          <img src="img/2.jpg" alt="Topic Two">
-        </a>
-        <div class="topic-caption">Topic Two</div>
-      </div>
-
-      <div class="topic-card">
-        <a class="thumb" href="https://example.com/three" target="_blank" rel="noopener">
-          <img src="img/3.jpg" alt="Topic Three">
-        </a>
-        <div class="topic-caption">Topic Three</div>
-      </div>
-
-      <div class="topic-card">
-        <a class="thumb" href="https://example.com/four" target="_blank" rel="noopener">
-          <img src="img/4.jpg" alt="Topic Four">
-        </a>
-        <div class="topic-caption">Topic Four</div>
-      </div>
-
-      <div class="topic-card">
-        <a class="thumb" href="https://example.com/five" target="_blank" rel="noopener">
-          <img src="img/1-1.jpg" alt="Topic Five">
-        </a>
-        <div class="topic-caption">Topic Five</div>
-      </div> -->
+      <!-- 这里保留你原来的色块容器（JS 会填充） -->
     </div>
+  </div>
+</div>
   </aside>
 
   <script>
@@ -751,18 +785,21 @@ function renderColorSwatches(colors){
 
 /* 应用颜色：更新 CSS 变量 + UI 选中态 + 本地存储 */
 function selectColor(hex){
-  // 立即应用背景
-  document.documentElement.style.setProperty('--theme-bg', hex);
+  if (currentTab === 'bg') {
+    document.documentElement.style.setProperty('--theme-bg', hex);
+    try { localStorage.setItem('flip.theme.bg', hex); } catch(e){}
+  } else {
+    document.documentElement.style.setProperty('--theme-fg', hex);
+    try { localStorage.setItem('flip.theme.fg', hex); } catch(e){}
+  }
 
-  // 先保存到本地存储（就算后面 UI 更新报错，刷新也能记住）
-  try { localStorage.setItem('flip.theme.bg', hex); } catch(e){}
-
-  // 再更新选中态（防止 dataset.color 为空时报错）
+  // 选中态
   topicsListEl.querySelectorAll('.color-swatch').forEach(el => {
     const cur = (el.dataset.color || '').toLowerCase();
     el.setAttribute('aria-selected', String(cur === hex.toLowerCase()));
   });
 }
+
 
 /* 读取已保存颜色（可选） */
 function loadColor(){
@@ -775,6 +812,67 @@ function loadColor(){
   document.documentElement.style.setProperty('--theme-bg', saved);
   renderColorSwatches(COLORS);
 })();
+
+// 读取并应用上次字体色
+(function initFontColor(){
+  try {
+    const fg = localStorage.getItem('flip.theme.fg') || '#dedede';
+    document.documentElement.style.setProperty('--theme-fg', fg);
+  } catch(e){}
+})();
+
+
+
+/* ===== 左侧导航：切换 BG / FONT ===== */
+let currentTab = 'bg';
+const asideEl = document.getElementById('panelAside');
+
+asideEl.addEventListener('click', (e) => {
+  const btn = e.target.closest('.nav-item');
+  if (!btn) return;
+  // 激活态
+  asideEl.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  // 切换目标
+  currentTab = btn.dataset.target;
+  renderTabContent();
+});
+
+/* ===== 字体颜色候选 ===== */
+const FONT_COLORS = [
+  { name: 'White Color', hex: '#FFFFFF' },
+  { name: 'Light Gray Color', hex: '#EDEDED' },
+  { name: 'Medium Gray Color', hex: '#BFBFBF' },
+  { name: 'Slate Gray Color', hex: '#9AA0A6' },
+  { name: 'Dark Gray Color', hex: '#555555' },
+  { name: 'Golden Yellow Color', hex: '#FFD54F' },
+  { name: 'Mint Green Color', hex: '#A7E8BD' },
+  { name: 'Sky Blue Color', hex: '#80D8FF' },
+  { name: 'Coral Pink Color', hex: '#FF8A80' },
+  { name: 'Lavender Purple Color', hex: '#C5A3FF' },
+  { name: 'Amber Orange Color', hex: '#FD9C37' },
+  { name: 'Baby Blue Color', hex: '#C1DAFF' },
+  { name: 'Periwinkle Blue Color', hex: '#B9BAF6' },
+  { name: 'Bright Red Color', hex: '#FA0009' },
+  { name: 'Cyan Aqua Color', hex: '#28E5E5' },
+  { name: 'Neon Green Color', hex: '#48FE95' },
+  { name: 'Hot Pink Color', hex: '#E81F63' },
+  { name: 'Aqua Mint Color', hex: '#26FED3' },
+  { name: 'Lilac Purple Color', hex: '#DCC1E7' }
+
+];
+
+/* 用现有渲染函数复用：根据 tab 填充右侧 topicsList */
+function renderTabContent(){
+  if (currentTab === 'bg') {
+    renderColorSwatches(COLORS);
+  } else {
+    renderColorSwatches(FONT_COLORS);
+  }
+}
+// 打开抽屉时默认渲染一次（保留你原来的 initThemePicker 也没问题）
+renderTabContent();
+
 
 
 </script>
