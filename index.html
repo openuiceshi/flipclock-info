@@ -263,7 +263,7 @@
     right: 0;
     bottom: 0;
     z-index: 998;
-    width: min(86vw, 620px);      /* 小屏 86vw，大屏至多 420px */
+    width: min(86vw, 660px);      /* 小屏 86vw，大屏至多 420px */
     background: rgba(0, 0, 0, 0.8);
     backdrop-filter: blur(6px);
     /*box-shadow: -10px 0 30px rgba(0,0,0,0.35);*/
@@ -475,6 +475,33 @@ body{
 }
 
 
+/* 仅作用于右侧内容区里的 About 面板 */
+#topicsList .about-pane{
+  grid-column: 1 / -1;   /* 若 topicsList 是 grid，就占满整行；不是 grid 也不影响 */
+  color: #ddd;           /* 按你面板文字色需要可改 */
+  /*line-height: 1.6;*/
+  padding: 4px 2px 12px; /* 让文字不贴边，滚动条样式仍复用现有容器 */
+}
+#topicsList .about-pane h2{ font-size: 20px; margin: 32px 0 10px; }
+#topicsList .about-pane h3{ font-size: 16px; margin: 20px 0 8px; font-weight: 400}
+/*#topicsList .about-pane h3{  margin: 10px 0; }*/
+#topicsList .about-pane ul{ margin: 8px 0 16px 20px; padding: 0; }
+#topicsList .about-pane li{ margin: 6px 0; }
+
+/* about里面的image */
+
+.about-image {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.about-image img {
+  width: 100%;
+  max-width: 520px;
+  border-radius: 8px;
+  /*box-shadow: 0 4px 18px rgba(0,0,0,0.35);*/
+}
+
 
   </style>
 </head>
@@ -538,6 +565,13 @@ body{
     <button class="nav-item" data-target="font">
       <i class="ri-font-size"></i><span>Font</span>
     </button>
+    <!-- 新增 About（或你想叫 FAQ 也行） -->
+    <button class="nav-item" data-target="about">
+      <i class="ri-question-line"></i><span>About / FAQ</span>
+    </button>
+   <!--  <button class="nav-item" data-target="privacy">
+      <i class="ri-mail-line"></i><span>Privacy Policy</span>
+    </button> -->
   </nav>
 
   <div class="panel-content">
@@ -866,16 +900,109 @@ const FONT_COLORS = [
 function renderTabContent(){
   if (currentTab === 'bg') {
     renderColorSwatches(COLORS);
+  } else if (currentTab === 'about') {
+    renderAboutPane();           // ← 新增：渲染 About/FAQ
   } else {
-    renderColorSwatches(FONT_COLORS);
+    renderColorSwatches(FONT_COLORS);  // 仍旧是 font 的逻辑
   }
 }
+
 // 打开抽屉时默认渲染一次（保留你原来的 initThemePicker 也没问题）
 renderTabContent();
+
+function renderAboutPane(){
+  const topicsList = document.getElementById('topicsList') 
+    || document.querySelector('#topicsList, .topicsList, .topics-list, [data-role="topicsList"]');
+  if (!topicsList) return;
+
+  topicsList.innerHTML = `
+    <div class="about-pane">
+    <div class="about-image">
+    <img src="/img/mockup.jpg" alt="Flip Clock Online — minimalist online flip clock with seconds for desktop, tablet, and mobile" loading="lazy">
+  </div>
+  <p class="about-intro">
+    <strong>Flip Clock Online</strong> is a minimalist, aesthetic <em>online flip clock with seconds</em>.
+    It runs in your browser—no download. Switch between <b>12/24-hour</b>, show or hide <b>seconds</b>, enter <b>fullscreen</b>,
+    and fine-tune <b>background</b> and <b>font</b> colors so your clock looks perfect on any screen.
+  </p>
+
+  <div class="about-section">
+    <h2>Key Features</h2>
+    <ul>
+      <li>🕐 <strong>12/24-Hour Format</strong> — Switch instantly to match your routine.</li>
+      <li>⏱️ <strong>Seconds Toggle</strong> — Add precision or keep it serene — your call.</li>
+      <li>🖥️ <strong>Fullscreen Mode</strong> — A clean browser fullscreen clock for total focus.</li>
+      <li>🎨 <strong>Custom Background</strong> — Aesthetic themes to fit any workspace.</li>
+      <li>🔤 <strong>Font Color Control</strong> — High contrast for perfect readability.</li>
+      <li>💾 <strong>Local Preferences</strong> — Saved directly in your browser storage.</li>
+      <li>📱 <strong>Responsive Layout</strong> — Works seamlessly on desktop, tablet, and phone.</li>
+      <li>🔒 <strong>Privacy Friendly</strong> — No account, no tracking; your preferences stay local.</li>
+    </ul>
+  </div>
+
+  <div class="about-section">
+    <h2>Why You’ll Love It</h2>
+    <ul>
+      <li>🕒 <b>Clarity at a glance</b> — crisp digits and balanced spacing.</li>
+      <li>🎨 <b>Personal comfort</b> — minimalist & aesthetic looks you can tune.</li>
+      <li>🖥️ <b>Focus mode</b> — fullscreen view removes all distractions.</li>
+      <li>⚡ <b>Zero setup</b> — open the site and your clock is ready.</li>
+      <li>✅ <b>Always accurate</b> — mirrors your device’s local time.</li>
+    </ul>
+    <p>Tip: <b>Bookmark</b> this page or <b>Add to Home Screen</b> to open your clock in one tap.</p>
+  </div>
+
+  <div class="about-section">
+    <h2>Use Cases</h2>
+    <ul>
+      <li>💼 Desk display for a clean, <em>minimalist clock</em> during work or study.</li>
+      <li>🎥 Background timer for livestreams and studio setups.</li>
+      <li>🖥️ <em>Browser fullscreen clock</em> as a lightweight “screensaver”.</li>
+      <li>⏲️ Quick reference when you need an <em>online clock with seconds</em>.</li>
+    </ul>
+  </div>
+
+  <div class="about-section">
+    <h2>FAQ</h2>
+
+    <h3>🔸 <b>How do I switch between 12-hour and 24-hour time?</b><br>
+    Use the <b>12/24</b> control. In 12-hour mode, AM/PM is indicated.</h3>
+
+    <h3>🔸 <b>Can I show or hide seconds?</b><br>
+    Yes. Toggle <b>Seconds</b> to add precision or keep the display calmer.</h3>
+
+    <h3>🔸 <b>How do I enter fullscreen?</b><br>
+    Click the <b>Fullscreen</b> icon (or press <b>F11</b> / <b>Control+Command+F</b> on macOS). Repeat to exit.</h3>
+
+    <h3>🔸 <b>Where do I change colors?</b><br>
+    Open the right panel and choose a <b>Background</b> color and a <b>Font</b> color. Changes apply instantly.</h3>
+
+    <h3>🔸 <b>Will my settings be saved?</b><br>
+    Yes. Time format, seconds, and color choices are saved locally in your browser.</h3>
+
+    <h3>🔸 <b>Is it accurate?</b><br>
+    It uses your device’s <b>system time</b>. If needed, sync your OS time or enable automatic time & time zone.</h3>
+
+    <h3>🔸 <b>Does it work on mobile?</b><br>
+    Absolutely. The layout adapts to phones and tablets.</h3>
+
+    <h3>🔸 <b>Is it free?</b><br>
+    Yes — Flip Clock Online is free and private.</h3>
+
+    <h3>🔸 <b>What else is this clock called?</b><br>
+    Also known as a <em>split-flap clock</em> or <em>flipclock</em>. If you’re searching, try phrases like
+    “<em>flip clock online with seconds</em>”, “<em>aesthetic flip clock online</em>”, or (common misspelling) “<em>flipclok online</em>”.</h3>
+  </div>
+</div>
+
+  `;
+}
 
 
 
 </script>
+
+
 
 </body>
 </html>
