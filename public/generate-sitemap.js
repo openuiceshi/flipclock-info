@@ -11,12 +11,17 @@ const SITE_URL = process.env.SITE_URL || 'https://flipclock.info';
 // 站点路由（只列出你希望被收录的路径）
 const ROUTES = [
   '/',             // 首页：Flip Clock
+   '/privacy',      // 或 '/privacy.html'
+  '/terms',        // 或 '/terms.html'
 ];
 
 // 可选：为不同路由设置独立优先级/更新频率
 const routeMeta = {
-  '/': { changefreq: 'weekly', priority: 1.0 },
-  '/digital-clock': { changefreq: 'weekly', priority: 0.9 }
+   '/':            { changefreq: 'weekly', priority: 1.0 },
+  '/digital-clock':{ changefreq: 'weekly', priority: 0.9 },
+  '/privacy':      { changefreq: 'yearly', priority: 0.2 },
+  '/terms':        { changefreq: 'yearly', priority: 0.2 },
+
 };
 
 // ===== 生成 XML =====

@@ -12,9 +12,11 @@
   <link rel="preconnect" href="https://unpkg.com" crossorigin>
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 
-  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
+  <!-- <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet"> -->
+  <link rel="stylesheet" href="fonts/remixicon.css" >
+  <link rel="stylesheet" href="assets/fonts.css">
 
-  <link rel="stylesheet" href="/flip/flip.min.css" />
+  <link rel="stylesheet" href="/flip/flip.min.css" >
   <script src="/flip/flip.min.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@pqina/flip/dist/flip.min.css">
   <script src="https://cdn.jsdelivr.net/npm/@pqina/flip/dist/flip.min.js"></script>
@@ -133,6 +135,9 @@
       display:grid;
       place-items:center;
       background:#000000;
+      /*font-weight: 700;*/
+      /*font-family: 'Satoshi', sans-serif;*/
+      /*font-family: 'Satoshi', sans-serif;*/
     }
     
    .clock{display:flex;align-items:center;gap:clamp(8px,2vw,14px)}
@@ -164,8 +169,11 @@
 
 .tick-flip {
             font-weight: 800;
-           font-family: system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Open Sans","Helvetica Neue" !important;
+            font-family: system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Open Sans","Helvetica Neue" !important;
+           /*font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;*/
+           /*font-family: 'Outfit', sans-serif !important;*/
            font-variant-numeric: tabular-nums;
+           font-synthesis-weight: none;   /* 防止浏览器“合成加粗” */
 
 }
 
@@ -175,10 +183,10 @@
   content: "";
   position: absolute;
   top: 51%;
-  width: 3%;               /* 铰链宽度 */
-  height: 14%;              /* 铰链长度，占面板高度比例 */
+  width: 4%;               /* 铰链宽度 */
+  height: 16%;              /* 铰链长度，占面板高度比例 */
   /*background: linear-gradient(to bottom, #00bcd4, #007a99); */
-  /*background: url("img/hinge.png") center center / cover no-repeat;*/
+  /*background: url("hinge.png") center center / cover no-repeat;*/
 
   border-radius: 2px;
   transform: translateY(-50%);
@@ -206,7 +214,7 @@
 .visually-hidden{display: none;}
 @media (min-width: 1200px) {
   .tick {
-    font-size: clamp(48px, 11vw, 240px);
+    font-size: clamp(48px, 10vw, 240px);
   }
 }
 
@@ -237,10 +245,10 @@
 
 .ctrl-btn{
   width:40px;height:40px;
-  border-radius:20%;
+  border-radius:60%;
   display:flex;align-items:center;justify-content:center;
-  /*background:rgba(255,255,255,0.08);*/
-  color:rgba(255,255,255,0.28);
+  background:rgba(0,0,0,0.2);
+  color:rgba(255,255,255,0.48);
   cursor:pointer;
   transition:all .2s ease;
 }
@@ -267,11 +275,11 @@
   right: -40px;   /* 往外“探”一点更像角标；想贴里侧就改成 0 */
   bottom: 0px;   /* 想在内部就改成 0 */
   font-size: clamp(14px, 2.8vmin, 24px);
-  color: rgba(255,255,255,0.68);
+  color: rgba(255,255,255,0.98);
   letter-spacing: 1px;
   pointer-events: none;
   user-select: none;
-  text-shadow: 0 1px 2px rgba(0,0,0,.45);
+  text-shadow: 0 1px 2px rgba(0,0,0,.95);
   z-index: 5;
 }
 
@@ -319,7 +327,7 @@
     border: none;
     border-radius: 50%;
     /*background: linear-gradient(135deg, #666, #333);*/
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.35);
     color: #fff;
     font-size: 22px;
     cursor: pointer;
@@ -331,7 +339,7 @@
   .fab:hover { transform: translateY(-2px); }
   .fab:active { transform: translateY(0); box-shadow: 0 6px 14px rgba(0,0,0,0.25); }
   .fab-icon {
-    font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    /*font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";*/
     line-height: 1;
   }
 
@@ -344,8 +352,8 @@
     right: 0;
     bottom: 0;
     z-index: 998;
-    width: min(86vw, 660px);      /* 小屏 86vw，大屏至多 420px */
-    background: rgba(0, 0, 0, 0.8);
+    width: min(86vw, 860px);      /* 小屏 86vw，大屏至多 420px */
+    background: rgba(0, 0, 0, 0.9);
     backdrop-filter: blur(6px);
     /*box-shadow: -10px 0 30px rgba(0,0,0,0.35);*/
 
@@ -477,6 +485,7 @@ body{
   border: none;
   padding: 0;
   margin: 0;
+  border: 2px solid transparent; /* 为选中状态的边框做准备 */
 
   /* 原先卡片的“尺寸基准”在 a.thumb：width 100% + 16:9 比例 */
   width: 100%;
@@ -495,9 +504,12 @@ body{
 }
 
 /* 焦点可见（对齐原先 a.thumb:focus-visible 的视觉） */
+.color-swatch:hover,
 .color-swatch:focus-visible{
-  box-shadow: 0 0 0 3px rgba(130,190,255,0.8);
+  border-color: rgba(255, 255, 255, 0.5); /* 鼠标悬停或聚焦时显示半透明边框 */
 }
+
+
 
 /* 选中态高亮边环（你原先没有选中态，这里新增） */
 .color-swatch[aria-selected="true"]::after{
@@ -545,7 +557,12 @@ body{
 }
 .nav-item i{ font-size:18px; }
 .nav-item.active{
-  background: rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.1);
+  color:#fff;
+}
+
+.nav-item:hover{
+  background: rgba(255,255,255,0.1);
   color:#fff;
 }
 
@@ -582,6 +599,183 @@ body{
   /*box-shadow: 0 4px 18px rgba(0,0,0,0.35);*/
 }
 
+/* ===== 新增：为图片面板设计的样式 ===== */
+.thumbnail-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr)); 
+  gap: 12px;
+  padding: 2px 16px;
+}
+
+.thumbnail {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 12px;
+  cursor: pointer;
+  outline: none;
+  border: 2px solid transparent; /* 为选中状态的边框做准备 */
+  transition: border-color .2s ease;
+}
+
+.thumbnail:hover,
+.thumbnail:focus-visible {
+  border-color: rgba(255, 255, 255, 0.5); /* 鼠标悬停或聚焦时显示半透明边框 */
+}
+
+
+/* ===== 新增figure，为了完善seo ===== */
+
+figure {
+  margin: 0; /* 去掉默认外边距 */
+  display: block; /* 保证和原来的布局一致 */
+}
+
+figure img.thumbnail {
+  display: block;       /* 防止 inline 元素底部留白 */
+  width: 100%;          /* 继承原样式 */
+  height: auto;         /* 维持纵横比 */
+  border-radius: 12px;
+}
+
+.thumbnail-grid figure {
+  margin: 0;
+}
+
+
+
+
+.vote-btn {
+  right: 90px; /* 比原按钮向左偏移一点 */
+}
+
+/* 侧栏整体都用 Rubik */
+.panel-aside,
+.panel-aside .nav-item,
+.panel-aside .nav-item span {
+  /*font-family: 'Satoshi', system-ui, sans-serif;*/
+  font-weight: 400;        
+  letter-spacing: .2px;     /* 可选：一点点字距更稳 */
+}
+
+.image-category {
+  margin-bottom: 24px;
+  padding: 2px 2px;
+}
+
+.image-category h2 {
+  font-size: 18px;
+  font-weight: 600;
+  /*margin-bottom: 2px;*/
+  color: #fff;
+  text-transform: capitalize;
+  /*border-left: 3px solid #ffcc66;*/
+  padding-left: 16px;
+}
+
+.image-category:last-child {
+  margin-bottom: 0;
+}
+
+.thumbnail-grid figcaption{
+  text-align: center;
+  color: #ccc;
+  margin-top: 4px;
+  font-size: 14px;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 2;   /* 可改成 2 */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+
+
+/* ===== Links Pane ===== */
+.links-pane {
+  color: #ddd;
+  padding: 12px 16px;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.links-pane h2 {
+  font-size: 20px;
+  margin-bottom: 16px;
+  font-weight: 600;
+  text-align: left;
+}
+
+.links-pane .social-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: left;
+  gap: 16px;
+}
+
+.links-pane .social-links a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.08);
+  transition: all 0.25s ease;
+}
+
+.links-pane .social-links a:hover,
+.links-pane .social-links a:focus-visible {
+  background: rgba(255,255,255,0.18);
+  transform: translateY(-2px);
+}
+
+.links-pane .social-links img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+/* ===== Contact Pane ===== */
+.contact-pane {
+  color: #ddd;
+  padding: 12px 16px;
+  line-height: 1.6;
+}
+
+.contact-pane h2 {
+  font-size: 20px;
+  margin-bottom: 12px;
+}
+
+.contact-pane h3 {
+  margin-top: 20px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.contact-pane a {
+  color: #ccc;              /* 可根据主题改 */
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.contact-pane a:hover,
+.contact-pane a:focus-visible {
+  color: #ccc;
+  text-decoration: underline;
+}
+
+.contact-pane ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.contact-pane li {
+  margin: 6px 0;
+}
+
+
 
   </style>
 </head>
@@ -590,13 +784,13 @@ body{
 
   <!-- 控制按钮区（新增） -->
 <div class="controls">
-  <div id="toggle-seconds" class="ctrl-btn" title="显示/隐藏秒钟">
+  <div id="toggle-seconds" class="ctrl-btn" title="show/hidden second">
   <i class="ri-timer-2-line"></i>
 </div>
-  <div id="toggle-format" class="ctrl-btn" title="切换 12/24 小时">
+  <div id="toggle-format" class="ctrl-btn" title="switch 12/24 hour">
     <i class="ri-24-hours-line"></i>
   </div>
-  <div id="toggle-fullscreen" class="ctrl-btn" title="全屏显示">
+  <div id="toggle-fullscreen" class="ctrl-btn" title="fullscreen">
     <i class="ri-fullscreen-line"></i>
   </div>
 </div>
@@ -625,7 +819,12 @@ body{
     </div>
      <div id="ampm" class="ampm"></div>
   </div>
+
   <!-- 右下角浮动按钮 -->
+  <button class="fab vote-btn" id="voteBtn" title="Go vote" style="display:none;">
+    <span class="fab-icon">🫡</span>
+  </button>
+
   <button class="fab" id="toggleTopicsBtn" aria-expanded="false" aria-controls="topicsPanel" title="Open topics">
     <span class="fab-icon">≡</span>
   </button>
@@ -637,20 +836,34 @@ body{
     </div>
 
     <!-- 新增：整体布局（左侧导航 + 右侧内容） -->
-<div class="panel-body">
+  <div class="panel-body">
   <nav class="panel-aside" id="panelAside" aria-label="Theme categories">
     <button class="nav-item active" data-target="bg">
       <i class="ri-paint-fill"></i><span>Background</span>
     </button>
+
     <button class="nav-item" data-target="font">
       <i class="ri-font-size"></i><span>Font</span>
     </button>
+
+    <button class="nav-item" data-target="image">
+      <i class="ri-image-line"></i><span>Image</span>
+    </button>
+
+    <!-- <button class="nav-item" data-target="Music">
+      <i class="ri-music-line"></i><span>Music</span>
+    </button> -->
+    
     <!-- 新增 About（或你想叫 FAQ 也行） -->
     <button class="nav-item" data-target="about">
       <i class="ri-question-line"></i><span>About / FAQ</span>
     </button>
-   <!--  <button class="nav-item" data-target="privacy">
-      <i class="ri-mail-line"></i><span>Privacy Policy</span>
+    <button class="nav-item" data-target="mail">
+      <i class="ri-mail-line"></i><span>Contact</span>
+    </button>
+
+    <!-- <button class="nav-item" data-target="links">
+      <i class="ri-links-line"></i><span>Links</span>
     </button> -->
   </nav>
 
@@ -658,90 +871,885 @@ body{
     <div class="topics-list" id="topicsList">
       <!-- 这里保留你原来的色块容器（JS 会填充） -->
   
-  </div>
-  <div class="about-pane" id="aboutPane" style="display: none;">
-    <div class="about-image">
-    <img src="/img/mockup.jpg" alt="Flip Clock Online — minimalist online flip clock with seconds for desktop, tablet, and mobile" loading="lazy">
-  </div>
-  <p class="about-intro">
-    <strong>Flip Clock Online</strong> is a minimalist, aesthetic <em>online flip clock with seconds</em>.
-    It runs in your browser—no download. Switch between <b>12/24-hour</b>, show or hide <b>seconds</b>, enter <b>fullscreen</b>,
-    and fine-tune <b>background</b> and <b>font</b> colors so your clock looks perfect on any screen.
-  </p>
-
-  <div class="about-section">
-    <h2>Key Features</h2>
-    <ul>
-      <li>🕐 <strong>12/24-Hour Format</strong> — Switch instantly to match your routine.</li>
-      <li>⏱️ <strong>Seconds Toggle</strong> — Add precision or keep it serene — your call.</li>
-      <li>🖥️ <strong>Fullscreen Mode</strong> — A clean browser fullscreen clock for total focus.</li>
-      <li>🎨 <strong>Custom Background</strong> — Aesthetic themes to fit any workspace.</li>
-      <li>🔤 <strong>Font Color Control</strong> — High contrast for perfect readability.</li>
-      <li>💾 <strong>Local Preferences</strong> — Saved directly in your browser storage.</li>
-      <li>📱 <strong>Responsive Layout</strong> — Works seamlessly on desktop, tablet, and phone.</li>
-      <li>🔒 <strong>Privacy Friendly</strong> — No account, no tracking; your preferences stay local.</li>
-    </ul>
-  </div>
-
-  <div class="about-section">
-    <h2>Why You’ll Love It</h2>
-    <ul>
-      <li>🕒 <b>Clarity at a glance</b> — crisp digits and balanced spacing.</li>
-      <li>🎨 <b>Personal comfort</b> — minimalist & aesthetic looks you can tune.</li>
-      <li>🖥️ <b>Focus mode</b> — fullscreen view removes all distractions.</li>
-      <li>⚡ <b>Zero setup</b> — open the site and your clock is ready.</li>
-      <li>✅ <b>Always accurate</b> — mirrors your device’s local time.</li>
-    </ul>
-    <p>Tip: <b>Bookmark</b> this page or <b>Add to Home Screen</b> to open your clock in one tap.</p>
-  </div>
-
-  <div class="about-section">
-    <h2>Use Cases</h2>
-    <ul>
-      <li>💼 Desk display for a clean, <em>minimalist clock</em> during work or study.</li>
-      <li>🎥 Background timer for livestreams and studio setups.</li>
-      <li>🖥️ <em>Browser fullscreen clock</em> as a lightweight “screensaver”.</li>
-      <li>⏲️ Quick reference when you need an <em>online clock with seconds</em>.</li>
-    </ul>
-  </div>
-
-  <div class="about-section">
-    <h2>FAQ</h2>
-
-    <h3>🔸 <b>How do I switch between 12-hour and 24-hour time?</b><br>
-    Use the <b>12/24</b> control. In 12-hour mode, AM/PM is indicated.</h3>
-
-    <h3>🔸 <b>Can I show or hide seconds?</b><br>
-    Yes. Toggle <b>Seconds</b> to add precision or keep the display calmer.</h3>
-
-    <h3>🔸 <b>How do I enter fullscreen?</b><br>
-    Click the <b>Fullscreen</b> icon (or press <b>F11</b> / <b>Control+Command+F</b> on macOS). Repeat to exit.</h3>
-
-    <h3>🔸 <b>Where do I change colors?</b><br>
-    Open the right panel and choose a <b>Background</b> color and a <b>Font</b> color. Changes apply instantly.</h3>
-
-    <h3>🔸 <b>Will my settings be saved?</b><br>
-    Yes. Time format, seconds, and color choices are saved locally in your browser.</h3>
-
-    <h3>🔸 <b>Is it accurate?</b><br>
-    It uses your device’s <b>system time</b>. If needed, sync your OS time or enable automatic time & time zone.</h3>
-
-    <h3>🔸 <b>Does it work on mobile?</b><br>
-    Absolutely. The layout adapts to phones and tablets.</h3>
-
-    <h3>🔸 <b>Is it free?</b><br>
-    Yes — Flip Clock Online is free and private.</h3>
-
-    <h3>🔸 <b>What else is this clock called?</b><br>
-    Also known as a <em>split-flap clock</em> or <em>flipclock</em>. If you’re searching, try phrases like
-    “<em>flip clock online with seconds</em>”, “<em>aesthetic flip clock online</em>”, or (common misspelling) “<em>flipclok online</em>”.</h3>
-  </div>
-</div>
     </div>
-</div>
+    <div class="about-pane" id="aboutPane" style="display: none;">
+      <div class="about-image">
+        <img src="/img/mockup.jpg" alt="Flip Clock Online — minimalist online flip clock with seconds for desktop, tablet, and mobile" loading="lazy">
+      </div>
+      <p class="about-intro">
+        <strong>Flip Clock Online</strong> is a minimalist, aesthetic <em>online flip clock with seconds</em>.
+        It runs in your browser—no download. Switch between <b>12/24-hour</b>, show or hide <b>seconds</b>, enter <b>fullscreen</b>,
+        and fine-tune <b>background</b> and <b>font</b> colors so your clock looks perfect on any screen.
+      </p>
+
+      <div class="about-section">
+        <h2>Key Features</h2>
+        <ul>
+          <li>🕐 <strong>12/24-Hour Format</strong> — Switch instantly to match your routine.</li>
+          <li>⏱️ <strong>Seconds Toggle</strong> — Add precision or keep it serene — your call.</li>
+          <li>🖥️ <strong>Fullscreen Mode</strong> — A clean browser fullscreen clock for total focus.</li>
+          <li>🎨 <strong>Custom Background</strong> — Aesthetic themes to fit any workspace.</li>
+          <li>🔤 <strong>Font Color Control</strong> — High contrast for perfect readability.</li>
+          <li>💾 <strong>Local Preferences</strong> — Saved directly in your browser storage.</li>
+          <li>📱 <strong>Responsive Layout</strong> — Works seamlessly on desktop, tablet, and phone.</li>
+          <li>🔒 <strong>Privacy Friendly</strong> — No account, no tracking; your preferences stay local.</li>
+        </ul>
+      </div>
+
+      <div class="about-section">
+        <h2>Why You’ll Love It</h2>
+        <ul>
+          <li>🕒 <b>Clarity at a glance</b> — crisp digits and balanced spacing.</li>
+          <li>🎨 <b>Personal comfort</b> — minimalist & aesthetic looks you can tune.</li>
+          <li>🖥️ <b>Focus mode</b> — fullscreen view removes all distractions.</li>
+          <li>⚡ <b>Zero setup</b> — open the site and your clock is ready.</li>
+          <li>✅ <b>Always accurate</b> — mirrors your device’s local time.</li>
+        </ul>
+        <p>Tip: <b>Bookmark</b> this page or <b>Add to Home Screen</b> to open your clock in one tap.</p>
+      </div>
+
+      <div class="about-section">
+        <h2>Use Cases</h2>
+        <ul>
+          <li>💼 Desk display for a clean, <em>minimalist clock</em> during work or study.</li>
+          <li>🎥 Background timer for livestreams and studio setups.</li>
+          <li>🖥️ <em>Browser fullscreen clock</em> as a lightweight “screensaver”.</li>
+          <li>⏲️ Quick reference when you need an <em>online clock with seconds</em>.</li>
+        </ul>
+      </div>
+
+      <div class="about-section">
+        <h2>FAQ</h2>
+
+        <h3>🔸 <b>How do I switch between 12-hour and 24-hour time?</b><br>
+        Use the <b>12/24</b> control. In 12-hour mode, AM/PM is indicated.</h3>
+
+        <h3>🔸 <b>Can I show or hide seconds?</b><br>
+        Yes. Toggle <b>Seconds</b> to add precision or keep the display calmer.</h3>
+
+        <h3>🔸 <b>How do I enter fullscreen?</b><br>
+        Click the <b>Fullscreen</b> icon (or press <b>F11</b> / <b>Control+Command+F</b> on macOS). Repeat to exit.</h3>
+
+        <h3>🔸 <b>Where do I change colors?</b><br>
+        Open the right panel and choose a <b>Background</b> color and a <b>Font</b> color. Changes apply instantly.</h3>
+
+        <h3>🔸 <b>Will my settings be saved?</b><br>
+        Yes. Time format, seconds, and color choices are saved locally in your browser.</h3>
+
+        <h3>🔸 <b>Is it accurate?</b><br>
+        It uses your device’s <b>system time</b>. If needed, sync your OS time or enable automatic time & time zone.</h3>
+
+        <h3>🔸 <b>Does it work on mobile?</b><br>
+        Absolutely. The layout adapts to phones and tablets.</h3>
+
+        <h3>🔸 <b>Is it free?</b><br>
+        Yes — Flip Clock Online is free and private.</h3>
+
+        <h3>🔸 <b>What else is this clock called?</b><br>
+        Also known as a <em>split-flap clock</em> or <em>flipclock</em>. If you’re searching, try phrases like
+        “<em>flip clock online with seconds</em>”, “<em>aesthetic flip clock online</em>”, or (common misspelling) “<em>flipclok online</em>”.</h3>
+      </div>
+    </div>
+          <!-- Links Pane (NEW) -->
+      <div class="links-pane" id="linksPane" style="display: none;">
+        <h2>Follow & Links</h2>
+        <div class="social-links" role="list">
+          <!-- Replace the href/src with your actual links/icons -->
+
+          <!-- Add more icons as needed -->
+        </div>
+      </div>
+
+      <!-- Contact Pane (NEW) -->
+      <div class="contact-pane" id="contactPane" style="display: none;">
+        <h2>Contact</h2>
+        <p>Email:  contact@flipclock.info</a></p>
+
+        <h3>Legal</h3>
+        <ul>
+          <li><a href="/privacy.html" target="_blank" rel="noopener">Privacy Policy</a></li>
+          <li><a href="/terms.html" target="_blank" rel="noopener">Terms of Service</a></li>
+        </ul>
+      </div>
+
+     <!-- ========================================================== -->
+    <div id="imagePane" style="display: none;">
+      <div class="image-category">
+        <h2>Painting</h2>
+        <div class="thumbnail-grid">
+          <figure>
+            <img class="thumbnail" 
+            src="background/painting/vincent-van-gogh-the-starry-night-1889.jpg" 
+            data-full-src="background/painting/vincent-van-gogh-the-starry-night-1889.jpg" 
+            alt="The famous oil on canvas painting ’The Starry Night‘ by Post-Impressionist artist Vincent van Gogh, depicting a dramatic night sky with a swirling celestial body, a glowing crescent moon, and bright stars over a tranquil village." 
+            role="button" 
+            tabindex="0">
+            <figcaption>The Starry Night</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/painting/expressive-sunset-ocean-painting.jpg" 
+            data-full-src="background/painting/expressive-sunset-ocean-painting.jpg" 
+            alt="An expressive, textured painting of a vibrant golden and orange sunset over the ocean, with the large sun casting a brilliant reflection on the water's surface." 
+            role="button" 
+            tabindex="0">
+            <figcaption>Golden Sunset</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/painting/expressive-moonrise-ocean-painting.jpg" 
+            data-full-src="background/painting/expressive-moonrise-ocean-painting.jpg" 
+            alt="An expressive, textured painting in a post-impressionist style of a large yellow moon rising over a dark blue ocean, with the moonlight reflecting on the water's surface." 
+            role="button" 
+            tabindex="0">
+            <figcaption>Midnight Moon</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/painting/vincent-van-gogh-the-siesta-1890.jpg" 
+            data-full-src="background/painting/vincent-van-gogh-the-siesta-1890.jpg" 
+            alt="The famous oil painting ’Noon: Rest from Work (after Millet)', also known as 'The Siesta', by Vincent van Gogh, depicting two peasants napping against a large haystack in a golden wheat field during the midday heat." 
+            role="button" 
+            tabindex="0">
+            <figcaption>The Siesta (after Millet)</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/painting/vincent-van-gogh-thatched-cottages-at-cordeville-1890.jpg" 
+            data-full-src="background/painting/vincent-van-gogh-thatched-cottages-at-cordeville-1890.jpg" 
+            alt="The famous oil painting ‘Thatched Cottages at Cordeville‘ by Vincent van Gogh, depicting a vibrant and turbulent landscape with thatched-roof houses, swirling green trees, and a dramatic, expressive cloudy sky." 
+            role="button" 
+            tabindex="0">
+            <figcaption>Thatched Cottages at Cordeville</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/painting/vincent-van-gogh-view-of-arles-with-irises-1888.jpg" 
+            data-full-src="background/painting/vincent-van-gogh-view-of-arles-with-irises-1888.jpg" 
+            alt="The famous oil painting 'View of Arles with Irises' by Vincent van Gogh, depicting a vibrant field of yellow flowers with purple irises in the foreground, and the French town of Arles visible in the distance." 
+            role="button" 
+            tabindex="0">
+            <figcaption>View of Arles with Irises</figcaption>
+          </figure>
+          </div>
+        </div>
+
+        <div class="image-category">
+        <h2>Beach</h2>
+        <div class="thumbnail-grid">
+          <figure>
+            <img class="thumbnail" 
+            src="background/beach/aerial-view-tropical-beach-turquoise-water.jpg" 
+            data-full-src="background/beach/aerial-view-tropical-beach-turquoise-water.jpg" 
+            alt="A stunning top-down aerial view of a pristine tropical beach, showing gentle white waves washing onto the white sand shore next to crystal-clear turquoise water and lush palm trees." 
+            role="button" 
+            tabindex="0">
+            <figcaption>Tropical Paradise</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/beach/orange-starfish-on-sandy-beach-with-wave.jpg" 
+            data-full-src="background/beach/orange-starfish-on-sandy-beach-with-wave.jpg" 
+            alt="A vibrant orange starfish resting on the wet sand of a sunny beach as the white foam of a gentle ocean wave washes up beside it." 
+            role="button" 
+            tabindex="0">
+            <figcaption>Starfish on the Shore</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/beach/aerial-view-couple-relaxing-canoe-turquoise-water.jpg" 
+            data-full-src="background/beach/aerial-view-couple-relaxing-canoe-turquoise-water.jpg" 
+            alt="Top-down aerial view of a couple relaxing on a wooden canoe in crystal-clear, sparkling turquoise water on a sunny day." 
+            role="button" 
+            tabindex="0">
+            <figcaption>Tropical Getaway</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/beach/aerial-view-boats-snorkeling-in-tropical-bay.jpg" 
+            data-full-src="background/beach/aerial-view-boats-snorkeling-in-tropical-bay.jpg" 
+            alt="Top-down aerial view of a tropical bay with colorful tour boats anchored in crystal-clear turquoise water as people snorkel and swim near a sandy beach." 
+            role="button" 
+            tabindex="0">
+            <figcaption>Snorkeling Paradise</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/beach/aerial-view-turquoise-wave-on-beach.jpg" 
+            data-full-src="background/beach/aerial-view-turquoise-wave-on-beach.jpg" 
+            alt="Abstract top-down aerial view of a powerful turquoise ocean wave crashing and creating white foam on a pale sandy beach." 
+            role="button" 
+            tabindex="0">
+            <figcaption>Ocean's Edge</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <div class="image-category">
+        <h2>Landscape</h2>
+        <div class="thumbnail-grid">
+          <figure>
+            <img class="thumbnail" 
+            src="background/landscape/aerial-view-snowy-mountains-alpine-lake-sunrise.jpg" 
+            data-full-src="background/landscape/aerial-view-snowy-mountains-alpine-lake-sunrise.jpg" 
+            alt="A spectacular aerial view of a snow-covered mountain range at sunrise, with a steep, rocky cliff in the foreground and a dark blue alpine lake nestled in the valley below." 
+            role="button" 
+            tabindex="0">
+            <figcaption>Alpine Sunrise</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/landscape/aerial-view-oahu-hawaii-koolau-mountains-coastline.jpg" 
+            data-full-src="background/landscape/aerial-view-oahu-hawaii-koolau-mountains-coastline.jpg" 
+            alt="Stunning aerial panorama of the Koʻolau Mountain Range on the coast of Oahu, Hawaii, showing the dramatic green ridges meeting the vibrant turquoise Pacific Ocean." 
+            role="button" 
+            tabindex="0">
+            <figcaption>Oahu Coastline</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/landscape/torres-del-paine-patagonia-sunrise-alpenglow.jpg" 
+            data-full-src="background/landscape/torres-del-paine-patagonia-sunrise-alpenglow.jpg" 
+            alt="The dramatic granite peaks of Torres del Paine National Park in Patagonia, glowing with fiery orange and red alpenglow during a stunning sunrise." 
+            role="button" 
+            tabindex="0">
+            <figcaption>Patagonia Sunrise</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/landscape/layered-blue-mountains-pastel-sunset.jpg" 
+            data-full-src="background/landscape/layered-blue-mountains-pastel-sunset.jpg" 
+            alt="A serene view of layered blue mountain silhouettes fading into the distance under a beautiful pastel pink, orange, and blue sunset sky." 
+            role="button" 
+            tabindex="0">
+            <figcaption>Mountain Dusk</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/landscape/golden-grass-with-dew-drops-at-sunrise.jpg" 
+            data-full-src="background/landscape/golden-grass-with-dew-drops-at-sunrise.jpg" 
+            alt="A dreamy close-up of delicate wild grass stalks covered in sparkling morning dew drops, backlit by the warm, golden light of a sunrise, creating a beautiful bokeh effect." 
+            role="button" 
+            tabindex="0">
+            <figcaption>Golden Dew</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/landscape/fairy-glen-isle-of-skye-scotland-sunset.jpg" 
+            data-full-src="background/landscape/fairy-glen-isle-of-skye-scotland-sunset.jpg" 
+            alt="A vibrant, magical sunset over the Fairy Glen on the Isle of Skye, Scotland, featuring lush green hills, the iconic Castle Ewen rock formation, and a stone labyrinth in the foreground." 
+            role="button" 
+            tabindex="0">
+            <figcaption>Fairy Glen Sunset</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/landscape/autumn-aspen-forest-snowy-rocky-mountains.jpg" 
+            data-full-src="background/landscape/autumn-aspen-forest-snowy-rocky-mountains.jpg" 
+            alt="A stunning autumn landscape in the Rocky Mountains, featuring a vibrant grove of golden aspen trees in the foreground and distant snow-capped peaks under a dramatic purple sunset sky." 
+            role="button" 
+            tabindex="0">
+            <figcaption>Autumn in the Rockies</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/landscape/mountain-meadow-with-wildflowers-at-sunset.jpg" 
+            data-full-src="background/landscape/mountain-meadow-with-wildflowers-at-sunset.jpg" 
+            alt="A vibrant mountain meadow bursting with colorful summer wildflowers, including red Indian Paintbrush and yellow sunflowers, under a dramatic cloudy sunset." 
+            role="button" 
+            tabindex="0">
+            <figcaption>Wildflower Meadow Sunset</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/landscape/drangarnir-sea-stacks-faroe-islands-long-exposure.jpg" 
+            data-full-src="background/landscape/drangarnir-sea-stacks-faroe-islands-long-exposure.jpg" 
+            alt="A dramatic long-exposure shot of the Drangarnir sea stacks and Tindhólmur islet in the Faroe Islands, with turbulent turquoise water swirling around the rocky coast under a stormy sky." 
+            role="button" 
+            tabindex="0">
+            <figcaption>Drangarnir Sea Stacks</figcaption>
+          </figure>
+
+        </div>
+      </div>
+
+      <div class="image-category">
+        <h2>Starry Sky</h2>
+        <div class="thumbnail-grid">
+          
+          <figure>
+            <img class="thumbnail" 
+            src="background/starry-sky/milky-way-galaxy-over-pine-forest-silhouette.jpg" 
+            data-full-src="background/starry-sky/milky-way-galaxy-over-pine-forest-silhouette.jpg" 
+            alt="A breathtaking view of the Milky Way galaxy stretching across a brilliant, star-filled night sky, with the dark silhouette of a dense pine tree forest in the foreground." 
+            role="button" 
+            tabindex="0">
+            <figcaption>Starry Forest</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/starry-sky/matterhorn-mountain-at-night-starry-sky-switzerland.jpg" 
+            data-full-src="background/starry-sky/matterhorn-mountain-at-night-starry-sky-switzerland.jpg" 
+            alt="A breathtaking night-time photograph of the iconic Matterhorn in the Swiss Alps, surrounded by a snow-covered landscape under a crystal-clear, star-filled sky." 
+            role="button" 
+            tabindex="0">
+            <figcaption>Matterhorn at Night</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/starry-sky/stargazer-silhouette-colorful-milky-way.jpg" 
+            data-full-src="background/starry-sky/stargazer-silhouette-colorful-milky-way.jpg" 
+            alt="Awe-inspiring silhouette of a person standing on a hill, looking up at the vibrant, colorful arc of the Milky Way galaxy in a vast, star-filled night sky." 
+            role="button" 
+            tabindex="0">
+            <figcaption>Stargazer</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/starry-sky/aurora-borealis-over-snowy-winter-landscape.jpg" 
+            data-full-src="background/starry-sky/aurora-borealis-over-snowy-winter-landscape.jpg" 
+            alt="Vibrant green and purple Aurora Borealis (Northern Lights) dancing across a star-filled sky over a vast, snowy winter landscape." 
+            role="button" 
+            tabindex="0">
+            <figcaption>Northern Lights</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/starry-sky/person-with-headlamp-watching-aurora-borealis.jpg" 
+            data-full-src="background/starry-sky/person-with-headlamp-watching-aurora-borealis.jpg" 
+            alt="Silhouette of a person shining a headlamp up into a star-filled sky with the green and blue Aurora Borealis (Northern Lights) overhead in a dark valley." 
+            role="button" 
+            tabindex="0">
+            <figcaption>Aurora Explorer</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/starry-sky/green-aurora-borealis-reflection-over-lake.jpg" 
+            data-full-src="background/starry-sky/green-aurora-borealis-reflection-over-lake.jpg" 
+            alt="A spectacular display of the green and purple Aurora Borealis (Northern Lights) dancing in a star-filled sky, perfectly reflecting over the calm water of a lake in front of a mountain silhouette." 
+            role="button" 
+            tabindex="0">
+            <figcaption>Aurora Reflection</figcaption>
+          </figure>
+
+
+          </div>
+        </div>
+
+      <div class="image-category">
+        <h2>Animal</h2>
+        <div class="thumbnail-grid">
+          <figure>
+            <img class="thumbnail" 
+            src="background/animal/happy-pembroke-welsh-corgi-on-grass.jpg" 
+            data-full-src="background/animal/happy-pembroke-welsh-corgi-on-grass.jpg" 
+            alt="Pembroke Welsh Corgi puppy smiling and lying down on green grass in a park at sunset" 
+            role="button" 
+            tabindex="0">
+            <figcaption>Happy Corgi</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/animal/pembroke-welsh-corgi-playing-with-ball-in-park.jpg" 
+            data-full-src="background/animal/pembroke-welsh-corgi-playing-with-ball-in-park.jpg" 
+            alt="A playful Pembroke Welsh Corgi running on grass towards the camera while holding a blue ball in its mouth, with a city park in the background" 
+            role="button" 
+            tabindex="0">
+            <figcaption>Playful Corgi</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/animal/clownfish-in-pink-sea-anemone.jpg" 
+            data-full-src="background/animal/clownfish-in-pink-sea-anemone.jpg" 
+            alt="Vibrant orange and white clownfish peeking out from the tentacles of a glowing pink and purple sea anemone against a dark background" 
+            role="button" 
+            tabindex="0">
+            <figcaption>Clownfish in Anemone</figcaption>
+          </figure>
+          <figure>
+            <img class="thumbnail" 
+            src="background/animal/red-fox-standing-in-snow-at-sunset.jpg" 
+            data-full-src="background/animal/red-fox-standing-in-snow-at-sunset.jpg" 
+            alt="A majestic red fox stands alert on a snowy hill, its orange fur glowing in the warm light of the setting sun against a cool blue background." 
+            role="button" 
+            tabindex="0">
+            <figcaption>Winter Fox</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/animal/fancy-goldfish-swimming-black-background.jpg" 
+            data-full-src="background/animal/fancy-goldfish-swimming-black-background.jpg" 
+            alt="An elegant orange and white fancy goldfish with flowing fins swimming gracefully, isolated against a solid black background." 
+            role="button" 
+            tabindex="0">
+            <figcaption>Elegant Goldfish</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/animal/green-sea-turtle-swimming-in-ocean.jpg" 
+            data-full-src="background/animal/green-sea-turtle-swimming-in-ocean.jpg" 
+            alt="A majestic green sea turtle gliding gracefully through the clear, deep blue water of the open ocean." 
+            role="button" 
+            tabindex="0">
+            <figcaption>Swimming Sea Turtle</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/animal/tabby-cat-with-blue-eyes-portrait.jpg" 
+            data-full-src="background/animal/tabby-cat-with-blue-eyes-portrait.jpg" 
+            alt="A dramatic close-up portrait of a tabby point cat with intense blue eyes, looking directly at the camera against a solid black background." 
+            role="button" 
+            tabindex="0">
+            <figcaption>Blue-Eyed Cat</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/animal/orange-and-white-cat-sitting-on-sunny-floor.jpg" 
+            data-full-src="background/animal/orange-and-white-cat-sitting-on-sunny-floor.jpg" 
+            alt="An adorable orange and white cat sitting on a hardwood floor in a patch of sunlight, looking up at the camera with a curious head tilt." 
+            role="button" 
+            tabindex="0">
+            <figcaption>Curious Cat</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/animal/long-haired-tabby-cat-peeking-white-background.jpg" 
+            data-full-src="background/animal/long-haired-tabby-cat-peeking-white-background.jpg" 
+            alt="A beautiful long-haired brown tabby cat with stunning green eyes peeking up from the bottom of the frame, isolated on a minimalist white background." 
+            role="button" 
+            tabindex="0">
+            <figcaption>Peeking Cat</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/animal/orange-flamingo-portrait-black-background.jpg" 
+            data-full-src="background/animal/orange-flamingo-portrait-black-background.jpg" 
+            alt="A dramatic close-up portrait of a vibrant orange flamingo's head and neck, isolated against a solid black background." 
+            role="button" 
+            tabindex="0">
+            <figcaption>Flamingo Portrait</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/animal/black-and-white-cat-on-bamboo-green-background.jpg" 
+            data-full-src="background/animal/black-and-white-cat-on-bamboo-green-background.jpg" 
+            alt="A handsome black and white tuxedo cat with green eyes rests its paws on a bamboo ledge, looking calmly at the camera against a solid green background." 
+            role="button" 
+            tabindex="0">
+            <figcaption>Poised Cat</figcaption>
+          </figure>
+          </div>
+        </div>
+
+      <div class="image-category">
+        <h2>Beauty</h2>
+        <div class="thumbnail-grid">
+          <figure>
+            <img class="thumbnail" 
+            src="background/beauty/woman-in-black-swimsuit-lounging-seaside.jpg" 
+            data-full-src="background/beauty/woman-in-black-swimsuit-lounging-seaside.jpg" 
+            alt="A beautiful woman in a stylish black one-piece swimsuit lounging elegantly on a daybed, with a serene and minimalist background of the sea and sky." 
+            role="button" 
+            tabindex="0">
+            <figcaption>Seaside Serenity</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/beauty/troy-trojans-cheerleader-performing-at-game.jpg" 
+            data-full-src="background/beauty/troy-trojans-cheerleader-performing-at-game.jpg" 
+            alt="An enthusiastic Troy Trojans cheerleader with a yellow bow in her blonde hair, smiling and raising white pom-poms to energize the crowd at a football game." 
+            role="button" 
+            tabindex="0">
+            <figcaption>Game Day Spirit</figcaption>
+          </figure>
+        </div>
+      </div>
+
+    
+
+        <div class="image-category">
+        <h2>abstract</h2>
+        <div class="thumbnail-grid">
+          <figure>
+            <img class="thumbnail" 
+            src="background/abstract/abstract-neon-curves-blue-purple.jpg" 
+            data-full-src="background/abstract/abstract-neon-curves-blue-purple.jpg" 
+            alt="A dynamic abstract 3D render of sleek, curved, glossy shapes illuminated by vibrant neon blue and purple lights against a dark background." 
+            role="button" 
+            tabindex="0">
+            <figcaption>Neon Curves</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/abstract/abstract-light-vortex-purple-pink.jpg" 
+            data-full-src="background/abstract/abstract-light-vortex-purple-pink.jpg" 
+            alt="A vibrant abstract long-exposure photograph of swirling light trails, creating a dynamic vortex of bright purple, blue, and pink neon colors." 
+            role="button" 
+            tabindex="0">
+            <figcaption>Light Vortex</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/abstract/abstract-golden-bronze-curves-background.jpg" 
+            data-full-src="background/abstract/abstract-golden-bronze-curves-background.jpg" 
+            alt="An elegant abstract background featuring layers of smooth, concentric curves in warm, metallic bronze and gold tones, flowing into a dark, shadowy space." 
+            role="button" 
+            tabindex="0">
+            <figcaption>Golden Curves</figcaption>
+          </figure>
+
+          </div>
+        </div>
+
+        <div class="image-category">
+        <h2>car</h2>
+        <div class="thumbnail-grid">
+          <figure>
+            <img class="thumbnail" 
+            src="background/car/black-porsche-panamera-turbo-driving-on-highway.jpg" 
+            data-full-src="background/car/black-porsche-panamera-turbo-driving-on-highway.jpg" 
+            alt="A sleek black Porsche Panamera Turbo captured in a motion shot as it drives on a highway at dusk, with its distinctive red LED taillight bar illuminated." 
+            role="button" 
+            tabindex="0">
+            <figcaption>Panamera in Motion</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/car/dark-gray-steeda-ford-mustang-rooftop.jpg" 
+            data-full-src="background/car/dark-gray-steeda-ford-mustang-rooftop.jpg" 
+            alt="An aggressively styled, dark gray Steeda Ford Mustang parked head-on in a rooftop parking lot under a dramatic, cloudy sky." 
+            role="button" 
+            tabindex="0">
+            <figcaption>Steeda Mustang</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/car/blue-bmw-4-series-parked-urban-street.jpg" 
+            data-full-src="background/car/blue-bmw-4-series-parked-urban-street.jpg" 
+            alt="A vibrant Estoril Blue BMW 4 Series coupe parked on an urban street in front of a gray brick building with an 'ENTRANCE' sign." 
+            role="button" 
+            tabindex="0">
+            <figcaption>Urban Elegance</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/car/yellow-lamborghini-huracan-parked-on-city-street.jpg" 
+            data-full-src="background/car/yellow-lamborghini-huracan-parked-on-city-street.jpg" 
+            alt="A striking yellow Lamborghini Huracán with black wheels parked on a city street on a sunny day, with lush green trees in the background." 
+            role="button" 
+            tabindex="0">
+            <figcaption>Yellow Supercar</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/car/matte-gray-audi-r8-on-mountain-road-at-sunset.jpg" 
+            data-full-src="background/car/matte-gray-audi-r8-on-mountain-road-at-sunset.jpg" 
+            alt="A stunning matte gray Audi R8 supercar with custom black and bronze wheels parked on a winding mountain road during a beautiful sunset." 
+            role="button" 
+            tabindex="0">
+            <figcaption>R8 at Sunset</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/car/silver-mclaren-720s-at-norwegian-sod-roof-houses.jpg" 
+            data-full-src="background/car/silver-mclaren-720s-at-norwegian-sod-roof-houses.jpg" 
+            alt="A silver McLaren 720S supercar with white racing stripes and a wedding bow on the mirror, parked in front of traditional Norwegian houses with green sod roofs." 
+            role="button" 
+            tabindex="0">
+            <figcaption>Nordic Supercar</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/car/mercedes-benz-cls-class-profile-shot-black-and-white.jpg" 
+            data-full-src="background/car/mercedes-benz-cls-class-profile-shot-black-and-white.jpg" 
+            alt="An elegant black and white studio-style profile shot of a Mercedes-Benz CLS-Class luxury coupe, with dramatic lighting sculpting its sleek body lines against a solid black background." 
+            role="button" 
+            tabindex="0">
+            <figcaption>CLS Silhouette</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/car/modified-jeep-grand-cherokee-off-road-snowy-mountain.jpg" 
+            data-full-src="background/car/modified-jeep-grand-cherokee-off-road-snowy-mountain.jpg" 
+            alt="A heavily modified, mud-covered white Jeep Grand Cherokee equipped for off-roading, parked in a rugged landscape with a large, snow-capped mountain in the background." 
+            role="button" 
+            tabindex="0">
+            <figcaption>Mountain Explorer</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/car/san-marino-blue-bmw-m4-in-garage.jpg" 
+            data-full-src="background/car/san-marino-blue-bmw-m4-in-garage.jpg" 
+            alt="A stunning San Marino Blue BMW M4 coupe with a carbon fiber roof and aero parts, covered in water droplets and parked inside a modern garage." 
+            role="button" 
+            tabindex="0">
+            <figcaption>Blue M4 Beast</figcaption>
+          </figure>
+
+          </div>
+        </div>
+
+        
+
+        <div class="image-category">
+        <h2>Building</h2>
+        <div class="thumbnail-grid">
+          
+          <figure>
+            <img class="thumbnail" 
+            src="background/building/gold-coast-australia-skyline-at-dusk.jpg" 
+            data-full-src="background/building/gold-coast-australia-skyline-at-dusk.jpg" 
+            alt="A stunning photograph of the Gold Coast, Australia skyline at dusk, with the illuminated skyscrapers of Surfers Paradise, including the iconic Q1 tower, reflecting in the calm water." 
+            role="button" 
+            tabindex="0">
+            <figcaption>Gold Coast at Dusk</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/building/miami-florida-skyline-at-sunset.jpg" 
+            data-full-src="background/building/miami-florida-skyline-at-sunset.jpg" 
+            alt="A beautiful panoramic view of the downtown Miami, Florida skyline with its illuminated skyscrapers reflecting on the water at sunset, under a dramatic pastel pink and blue cloudy sky." 
+            role="button" 
+            tabindex="0">
+            <figcaption>Miami Skyline at Sunset</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/building/new-york-city-manhattan-skyline-sunset-east-river.jpg" 
+            data-full-src="background/building/new-york-city-manhattan-skyline-sunset-east-river.jpg" 
+            alt="A dramatic sunset over the Midtown Manhattan skyline in New York City, with iconic buildings like the Empire State Building and Chrysler Building illuminated and reflecting on the East River." 
+            role="button" 
+            tabindex="0">
+            <figcaption>Manhattan Sunset</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/building/chicago-skyline-aerial-view-lake-michigan-sunset.jpg" 
+            data-full-src="background/building/chicago-skyline-aerial-view-lake-michigan-sunset.jpg" 
+            alt="A stunning high-angle aerial view of the downtown Chicago skyline at sunset, with iconic skyscrapers like the John Hancock Center set against the vast expanse of Lake Michigan." 
+            role="button" 
+            tabindex="0">
+            <figcaption>Chicago Skyline at Sunset</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/building/shenzhen-shun-hing-square-skyscraper-at-night-with-moon.jpg" 
+            data-full-src="background/building/shenzhen-shun-hing-square-skyscraper-at-night-with-moon.jpg" 
+            alt="A low-angle nighttime photograph of the illuminated Shun Hing Square skyscraper in Shenzhen, China, with a crescent moon visible in the deep blue twilight sky." 
+            role="button" 
+            tabindex="0">
+            <figcaption>Shenzhen Moon</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/building/low-angle-view-of-skyscrapers-at-night.jpg" 
+            data-full-src="background/building/low-angle-view-of-skyscrapers-at-night.jpg" 
+            alt="A dramatic low-angle, worm's-eye view looking up at the dark night sky framed by the corners of four modern skyscrapers with glowing blue and white architectural lights." 
+            role="button" 
+            tabindex="0">
+            <figcaption>Urban Canyon</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/building/modern-white-building-repeating-windows-blue-sky.jpg" 
+            data-full-src="background/building/modern-white-building-repeating-windows-blue-sky.jpg" 
+            alt="A low-angle photograph of a modern white building with a repeating pattern of rectangular windows set against a clear, deep blue sky." 
+            role="button" 
+            tabindex="0">
+            <figcaption>Minimalist Architecture</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/building/modern-building-angled-windows-blue-sky.jpg" 
+            data-full-src="background/building/modern-building-angled-windows-blue-sky.jpg" 
+            alt="A dynamic low-angle, diagonal shot of a modern architectural facade, showing a repeating pattern of white horizontal lines and angled glass windows against a clear, vibrant blue sky." 
+            role="button" 
+            tabindex="0">
+            <figcaption>Architectural Lines</figcaption>
+          </figure>
+          </div>
+        </div>
+
+        <div class="image-category">
+        <h2>Christmas</h2>
+        <div class="thumbnail-grid">
+          
+          <figure>
+            <img class="thumbnail" 
+            src="background/christmas/merry-christmas-snowy-night-church-sleigh.jpg" 
+            data-full-src="background/christmas/merry-christmas-snowy-night-church-sleigh.jpg" 
+            alt="A festive ‘Merry Christmas‘ greeting card design featuring a magical snowy winter landscape at night, with a full moon, a charming church, and a silhouette of Santa's sleigh." 
+            role="button" 
+            tabindex="0">
+            <figcaption>Christmas Eve Magic</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/christmas/black-spiral-christmas-ornament-with-star-lights.jpg" 
+            data-full-src="background/christmas/black-spiral-christmas-ornament-with-star-lights.jpg" 
+            alt="A moody, close-up photograph of a unique black spiral Christmas ornament hanging on a tree, with warm, glowing star-shaped fairy lights in the background." 
+            role="button" 
+            tabindex="0">
+            <figcaption>Elegant Christmas</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/christmas/red-and-gold-christmas-ornaments-on-tree.jpg" 
+            data-full-src="background/christmas/red-and-gold-christmas-ornaments-on-tree.jpg" 
+            alt="A warm, festive close-up of a Christmas tree decorated with a red snowflake ornament, reflective gold and silver baubles, and sparkling gold tinsel." 
+            role="button" 
+            tabindex="0">
+            <figcaption>Classic Christmas</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/christmas/silver-glitter-snowflake-christmas-ornament.jpg" 
+            data-full-src="background/christmas/silver-glitter-snowflake-christmas-ornament.jpg" 
+            alt="A beautiful close-up of a sparkling silver glitter snowflake ornament hanging on a Christmas tree, with warm, out-of-focus lights creating a magical bokeh effect." 
+            role="button" 
+            tabindex="0">
+            <figcaption>Sparkling Snowflake</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/christmas/christmas-flat-lay-with-gifts-and-decorations.jpg" 
+            data-full-src="background/christmas/christmas-flat-lay-with-gifts-and-decorations.jpg" 
+            alt="A festive Christmas flat lay featuring wrapped gifts, a red ribbon, pine cones, and gold decorations arranged as a border on a dark green background, leaving empty copy space in the center." 
+            role="button" 
+            tabindex="0">
+            <figcaption>Christmas Flat Lay</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/christmas/cozy-christmas-flat-lay-wooden-background.jpg" 
+            data-full-src="background/christmas/cozy-christmas-flat-lay-wooden-background.jpg" 
+            alt="A cozy Christmas flat lay on a wooden background, featuring a blank piece of paper in the center framed by candy canes, dried oranges, pine cones, cinnamon sticks, a rustic gift, and warm fairy lights." 
+            role="button" 
+            tabindex="0">
+            <figcaption>Cozy Christmas</figcaption>
+          </figure>
+
+          </div>
+        </div>
+
+        <div class="image-category">
+        <h2>Thanksgiving Day</h2>
+        <div class="thumbnail-grid">
+          
+          <figure>
+            <img class="thumbnail" 
+            src="background/thanksgiving/thankful-thanksgiving-flat-lay-wood-background.jpg" 
+            data-full-src="background/thanksgiving/thankful-thanksgiving-flat-lay-wood-background.jpg" 
+            alt="A rustic Thanksgiving flat lay on a dark wood background, with the word 'Thankful' in gold glitter letters surrounded by decorative wooden cutouts of pumpkins, leaves, and acorns." 
+            role="button" 
+            tabindex="0">
+            <figcaption>Be Thankful</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/thanksgiving/happy-thanksgiving-illustration-pumpkin-picnic.jpg" 
+            data-full-src="background/thanksgiving/happy-thanksgiving-illustration-pumpkin-picnic.jpg" 
+            alt="A festive 'Happy Thanksgiving' greeting card illustration featuring a hand-drawn pumpkin, picnic basket, wine, and candles on a textured gold background." 
+            role="button" 
+            tabindex="0">
+            <figcaption>Happy Thanksgiving</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/thanksgiving/autumn-harvest-pile-of-pumpkins-and-squash.jpg" 
+            data-full-src="background/thanksgiving/autumn-harvest-pile-of-pumpkins-and-squash.jpg" 
+            alt="A vibrant, moody photograph of a large autumn harvest pile, with a close-up focus on colorful striped Delicata squash and a variety of pumpkins in the background." 
+            role="button" 
+            tabindex="0">
+            <figcaption>Autumn Harvest</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/thanksgiving/thanksgiving-turkey-dinner-on-table.jpg" 
+            data-full-src="background/thanksgiving/thanksgiving-turkey-dinner-on-table.jpg" 
+            alt="A beautifully presented Thanksgiving or Christmas dinner table, with a perfectly roasted turkey garnished with oranges and herbs as the centerpiece." 
+            role="button" 
+            tabindex="0">
+            <figcaption>Holiday Feast</figcaption>
+          </figure>
+
+          </div>
+        </div>
+
+
+    </div>
+
+
+    </div>
+
+  </div>
+
   </aside>
 
   <script>
+
+    // 投票按钮点击事件
+document.getElementById("voteBtn").addEventListener("click", () => {
+  window.open("https://poll-maker.com/poll5642095x8B1f4103-166", "_blank"); // 这里换成你的投票链接
+});
+
   let hTick = null, mTick = null, sTick = null;
   let is24h = true;
   let showSeconds = true;
@@ -883,7 +1891,7 @@ secBtn.addEventListener("click", () => {
       controls.style.opacity = '1';
       controls.style.pointerEvents = 'auto';
     }
-    if (fab) fab.style.display = '';
+    // if (fab) fab.style.display = '';
   }
 });
   /* 右侧抽屉开合控制 */
@@ -912,7 +1920,7 @@ secBtn.addEventListener("click", () => {
       if (!withinPanel && !withinBtn && panel.classList.contains('open')) {
         togglePanel(false);
       }
-    }, { capture: true });
+    }, { capture: true });  
 
 
 
@@ -979,9 +1987,20 @@ function renderColorSwatches(colors){
 /* 应用颜色：更新 CSS 变量 + UI 选中态 + 本地存储 */
 function selectColor(hex){
   if (currentTab === 'bg') {
+    // 1. 应用纯色背景
     document.documentElement.style.setProperty('--theme-bg', hex);
-    try { localStorage.setItem('flip.theme.bg', hex); } catch(e){}
-  } else {
+    
+    // 2.【新增】移除图片背景，让纯色背景能显示出来
+    document.body.style.backgroundImage = 'none';
+
+    try { 
+      // 3. 保存纯色背景的选择
+      localStorage.setItem('flip.theme.bg', hex); 
+      // 4.【新增】清除已保存的图片背景记录
+      localStorage.removeItem('flip.theme.bgImage');
+    } catch(e){}
+
+  } else { // 'font'
     document.documentElement.style.setProperty('--theme-fg', hex);
     try { localStorage.setItem('flip.theme.fg', hex); } catch(e){}
   }
@@ -1000,21 +2019,44 @@ function loadColor(){
 }
 
 /* 初始化 */
-(function initThemePicker(){
-  const saved = loadColor() || DEFAULT_COLOR;
-  document.documentElement.style.setProperty('--theme-bg', saved);
-  renderColorSwatches(COLORS);
-})();
+// (function initThemePicker(){
+//   const saved = loadColor() || DEFAULT_COLOR;
+//   document.documentElement.style.setProperty('--theme-bg', saved);
+//   renderColorSwatches(COLORS);
+// })();
 
 // 读取并应用上次字体色
-(function initFontColor(){
+// (function initFontColor(){
+//   try {
+//     const fg = localStorage.getItem('flip.theme.fg') || '#dedede';
+//     document.documentElement.style.setProperty('--theme-fg', fg);
+//   } catch(e){}
+// })();
+
+/* 初始化主题：优先加载图片，其次加载颜色和字体 */
+(function initTheme() {
   try {
-    const fg = localStorage.getItem('flip.theme.fg') || '#dedede';
-    document.documentElement.style.setProperty('--theme-fg', fg);
-  } catch(e){}
+    const savedImage = localStorage.getItem('flip.theme.bgImage');
+    const savedColor = localStorage.getItem('flip.theme.bg');
+    const savedFontColor = localStorage.getItem('flip.theme.fg') || '#dedede';
+
+    // 应用背景
+    if (savedImage) {
+      document.body.style.backgroundImage = `url('${savedImage}')`;
+      document.body.style.backgroundSize = 'cover';
+      document.body.style.backgroundPosition = 'center';
+      document.body.style.backgroundRepeat = 'no-repeat';
+      document.documentElement.style.setProperty('--theme-bg', 'transparent');
+    } else {
+      const color = savedColor || DEFAULT_COLOR;
+      document.documentElement.style.setProperty('--theme-bg', color);
+    }
+    
+    // 应用字体颜色
+    document.documentElement.style.setProperty('--theme-fg', savedFontColor);
+
+  } catch (e) {}
 })();
-
-
 
 /* ===== 左侧导航：切换 BG / FONT ===== */
 let currentTab = 'bg';
@@ -1055,26 +2097,83 @@ const FONT_COLORS = [
 
 ];
 
-/* 用现有渲染函数复用：根据 tab 填充右侧 topicsList */
-// JAVASCRIPT CHANGE: Simplified function to toggle visibility
-function renderTabContent() {
-  const topicsList = document.getElementById('topicsList');
-  const aboutPane = document.getElementById('aboutPane');
+/* ===== 新增逻辑：处理静态图片背景的交互 ===== */
 
+const imagePane = document.getElementById('imagePane');
+const thumbnails = document.querySelectorAll('.thumbnail');
+
+
+
+// 1. 在整个图片容器上监听点击事件（事件委托）
+imagePane.addEventListener('click', (e) => {
+  // 2. 检查被点击的是否是我们的缩略图
+  if (e.target.classList.contains('thumbnail')) {
+    const clickedThumb = e.target;
+    const fullSrc = clickedThumb.dataset.fullSrc; // 获取大图路径
+
+    // 3. 应用背景图片
+    document.body.style.backgroundImage = `url('${fullSrc}')`;
+    document.body.style.backgroundSize = 'cover';
+    document.body.style.backgroundPosition = 'center';
+    document.body.style.backgroundRepeat = 'no-repeat';
+    document.documentElement.style.setProperty('--theme-bg', 'transparent'); // 移除纯色背景
+
+    // 4. 保存用户的选择
+    try {
+      localStorage.setItem('flip.theme.bgImage', fullSrc);
+      localStorage.removeItem('flip.theme.bg'); // 清除之前保存的纯色背景
+    } catch (err) {}
+  }
+});
+
+// 为无障碍访问添加键盘支持
+imagePane.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') { // 当用户按回车或空格时
+        if (e.target.classList.contains('thumbnail')) {
+            e.preventDefault(); // 阻止按空格时页面滚动
+            e.target.click(); // 模拟一次点击
+        }
+    }
+});
+
+
+function renderTabContent() {
+  const topicsList  = document.getElementById('topicsList');  // BG / FONT 的色板容器
+  const aboutPane   = document.getElementById('aboutPane');
+  const imagePane   = document.getElementById('imagePane');
+  const linksPane   = document.getElementById('linksPane');   // NEW
+  const contactPane = document.getElementById('contactPane'); // NEW
+
+  // 统一隐藏
+  if (topicsList)  topicsList.style.display  = 'none';
+  if (aboutPane)   aboutPane.style.display   = 'none';
+  if (imagePane)   imagePane.style.display   = 'none';
+  if (linksPane)   linksPane.style.display   = 'none';
+  if (contactPane) contactPane.style.display = 'none';
+
+  // 分支显示
   if (currentTab === 'about') {
-    // 如果是 About 标签，就隐藏颜色列表，显示 About 面板
-    topicsList.style.display = 'none';
-    aboutPane.style.display = 'block';
+    if (aboutPane) aboutPane.style.display = 'block';
+
+  } else if (currentTab === 'image') {
+    if (imagePane) imagePane.style.display = 'block';
+
+  } else if (currentTab === 'links') {
+    if (linksPane) linksPane.style.display = 'block';
+
+  } else if (currentTab === 'mail') { // Contact
+    if (contactPane) contactPane.style.display = 'block';
+
   } else {
-    // 否则（是 Background 或 Font 标签），就反过来
-    aboutPane.style.display = 'none';
-    topicsList.style.display = 'grid'; // 恢复为 CSS 中定义的 grid 布局
-    
-    // 根据当前标签渲染对应的颜色块
-    const colorsToRender = (currentTab === 'bg') ? COLORS : FONT_COLORS;
-    renderColorSwatches(colorsToRender);
+    // 'bg' or 'font'
+    if (topicsList) {
+      topicsList.style.display = 'grid';
+      const colorsToRender = (currentTab === 'bg') ? COLORS : FONT_COLORS;
+      renderColorSwatches(colorsToRender);
+    }
   }
 }
+
 
 // 打开抽屉时默认渲染一次（保留你原来的 initThemePicker 也没问题）
 renderTabContent();
