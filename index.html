@@ -717,22 +717,20 @@ figure img.thumbnail {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
-  border-radius: 10px;
-  background: rgba(255,255,255,0.08);
   transition: all 0.25s ease;
+  color: #ccc;              /* 可根据主题改 */
+  text-decoration: none;
+  transition: color 0.2s ease;
 }
 
 .links-pane .social-links a:hover,
 .links-pane .social-links a:focus-visible {
-  background: rgba(255,255,255,0.18);
-  transform: translateY(-2px);
+  color: #fff;
 }
 
 .links-pane .social-links img {
-  width: 24px;
-  height: 24px;
+  /*width: 24px;
+  height: 24px;*/
   object-fit: contain;
 }
 
@@ -862,9 +860,9 @@ figure img.thumbnail {
       <i class="ri-mail-line"></i><span>Contact</span>
     </button>
 
-    <!-- <button class="nav-item" data-target="links">
+    <button class="nav-item" data-target="links">
       <i class="ri-links-line"></i><span>Links</span>
-    </button> -->
+    </button>
   </nav>
 
   <div class="panel-content">
@@ -955,6 +953,12 @@ figure img.thumbnail {
         <h2>Follow & Links</h2>
         <div class="social-links" role="list">
           <!-- Replace the href/src with your actual links/icons -->
+          <a href="https://frogdr.com/flipclock.info?utm_source=flipclock.info" target="_blank"><img src="https://frogdr.com/flipclock.info/badge-white.svg" alt="Monitor your Domain Rating with FrogDR" width="250" height="54"></a>
+          <a href="https://twelve.tools" target="_blank"><img src="https://twelve.tools/badge0-white.svg" alt="Featured on Twelve Tools" width="200" height="54"></a>
+          <a href="https://wired.business" target="_blank"><img src="https://wired.business/badge0-white.svg" alt="Featured on Wired Business" width="200" height="54"></a>
+          <a href="https://dofollow.tools" target="_blank"><img src="https://dofollow.tools/badge/badge_light.svg" alt="Featured on Dofollow.Tools" width="200" height="54" /></a>
+          <a href="https://startupfa.me/s/flipclock.info?utm_source=flipclock.info" target="_blank"><img src="https://startupfa.me/badges/featured-badge.webp" alt="flipclock.info - Featured on Startup Fame" width="171" height="54" /></a>
+
 
           <!-- Add more icons as needed -->
         </div>
