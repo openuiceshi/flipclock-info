@@ -10,21 +10,32 @@
   
   <meta name="google-adsense-account" content="ca-pub-5462377564130702">
 
-  <link rel="icon" type="/image/png" href="img/favicon.png">
+  <link rel="icon" type="image/png" href="img/favicon.png">
   <link rel="preconnect" href="https://unpkg.com" crossorigin>
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 
-  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
-  <link rel="stylesheet" href="/fonts/remixicon.css" >
-  <link rel="stylesheet" href="/assets/fonts.css">
+  <!-- 2. Remix Icon (图标库) - 异步加载，消除渲染阻塞 -->
+  <link 
+    href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" 
+    rel="stylesheet" 
+    media="print" 
+    onload="this.media='all'"
+  >
+  <!-- 保底：如果用户禁用了JS，依然加载图标 -->
+  <noscript>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
+  </noscript>
 
-  <link rel="stylesheet" href="/flip/flip.min.css" >
-  <script src="/flip/flip.min.js"></script>
-  <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@pqina/flip/dist/flip.min.css"> -->
-  <!-- <script src="https://cdn.jsdelivr.net/npm/@pqina/flip/dist/flip.min.js"></script> -->
+  <!-- 3. Flip Clock 样式 - 保持直接加载，因为它决定核心布局，避免页面抖动 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@pqina/flip/dist/flip.min.css">
 
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5462377564130702"
-     crossorigin="anonymous"></script>
+  <!-- 4. Flip Clock 脚本 - 关键修改：添加 defer 属性 -->
+  <!-- defer = 别停下来等我，先渲染页面，最后再运行脚本 -->
+  <script src="https://cdn.jsdelivr.net/npm/@pqina/flip/dist/flip.min.js" defer></script>
+  
+  <!-- 5. AdSense - 建议：如果为了极致分数，暂时注释掉下面这行，用我之前给您的 Lazy Load JS 代码放在 body 底部 -->
+  <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5462377564130702" crossorigin="anonymous"></script> -->
+
 
 
   <script type="application/ld+json">
