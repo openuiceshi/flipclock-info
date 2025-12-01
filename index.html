@@ -37,7 +37,6 @@
   <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5462377564130702" crossorigin="anonymous"></script> -->
 
 
-
   <script type="application/ld+json">
   {
   "@context":"https://schema.org",
@@ -315,13 +314,24 @@
     flex-direction: column;              /* 关键：从横排改竖排 */
     justify-content: center;
     gap: clamp(16px, 4vh, 28px);         /* 行与行之间的间距 */
-    /*top: -5%;*/
+    /*top:0%;*/
   }
   .tick {
     /* 小屏适配的字号，你可按需微调 */
     font-size: clamp(44px, 34vw, 180px);
   }
   .controls{display: none}
+
+   /* 2.【新增】隐藏右下角浮动菜单按钮 (FAB) */
+  .fab {
+    display: none !important;
+  }
+
+   /* 3.【新增】隐藏秒钟部分 */
+  /* 使用属性选择器精准定位秒钟的 DOM 元素 */
+  [data-did-init="setupS"] {
+    display: none !important;
+  }
 
   /* 如果 AM/PM 角标吸附在 .clock 右下角，三排时让它稍微贴内一点 */
   .ampm {
@@ -622,6 +632,10 @@ body{
   grid-template-columns: repeat(3, minmax(0, 1fr)); 
   gap: 12px;
   padding: 2px 16px;
+
+  /* 👇 新增这两行关键代码 */
+  content-visibility: auto; 
+  contain-intrinsic-size: 1000px; /* 预估高度，防止滚动条跳动 */
 }
 
 .thumbnail {
@@ -861,9 +875,9 @@ figure img.thumbnail {
       <i class="ri-font-size"></i><span>Font</span>
     </button>
 
-    <!-- <button class="nav-item" data-target="image">
+    <button class="nav-item" data-target="image">
       <i class="ri-image-line"></i><span>Image</span>
-    </button> -->
+    </button>
 
     <!-- <button class="nav-item" data-target="Music">
       <i class="ri-music-line"></i><span>Music</span>
@@ -971,34 +985,27 @@ figure img.thumbnail {
         <div class="social-links" role="list">
           <!-- Replace the href/src with your actual links/icons -->
           <a href="https://frogdr.com/flipclock.info?utm_source=flipclock.info" target="_blank"><img loading="lazy" src="https://frogdr.com/flipclock.info/badge-white.svg" alt="Monitor your Domain Rating with FrogDR" width="250" height="54"></a>
-          
           <a href="https://twelve.tools" target="_blank"><img loading="lazy" src="https://twelve.tools/badge0-white.svg" alt="Featured on Twelve Tools" width="200" height="54"></a>
-
           <a href="https://wired.business" target="_blank"><img loading="lazy" src="https://wired.business/badge0-white.svg" alt="Featured on Wired Business" width="200" height="54"></a>
-
           <a href="https://dofollow.tools" target="_blank"><img loading="lazy" src="https://dofollow.tools/badge/badge_light.svg" alt="Featured on Dofollow.Tools" width="200" height="54" /></a>
           
           <a href="https://toolfame.com/item/flipclock-info" target="_blank" rel="noopener noreferrer">
           <img loading="lazy" src="https://toolfame.com/badge-light.svg" alt="Featured on toolfame.com" style="height: 54px; width: auto;" /></a>
-
-          <a href="https://dang.ai/" target="_blank" ><img loading="lazy" src="https://cdn.prod.website-files.com/63d8afd87da01fb58ea3fbcb/6487e2868c6c8f93b4828827_dang-badge.png" alt="Dang.ai" style="width: 150px; height: 54px;" width="150" height="54"/></a>
-
+          <a href="https://dang.ai/" target="_blank" ><img loading="lazy" loading="lazy" src="https://cdn.prod.website-files.com/63d8afd87da01fb58ea3fbcb/6487e2868c6c8f93b4828827_dang-badge.png" alt="Dang.ai" style="width: 150px; height: 54px;" width="150" height="54"/></a>
           <a href="https://saasfame.com/item/flipclock-info" target="_blank" rel="noopener noreferrer">
           <img loading="lazy" src="https://saasfame.com/badge-light.svg" alt="Featured on saasfame.com" style="height: 54px; width: auto;" /></a>
-
           <a href="https://startupfa.me/s/flipclock.info?utm_source=flipclock.info" target="_blank"><img loading="lazy" src="https://startupfa.me/badges/featured-badge-small.webp" alt="flipclock.info - Featured on Startup Fame" width="224" height="36" /></a>
 
-          <a href="https://fazier.com/launches/flipclock.info" target="_blank"><img loading="lazy" src="https://fazier.com/api/v1//public/badges/launch_badges.svg?badge_type=featured&theme=light" width=250 alt="Fazier badge" /></a>
+           <a href="https://fazier.com/launches/flipclock.info" target="_blank"><img loading="lazy" src="https://fazier.com/api/v1//public/badges/launch_badges.svg?badge_type=featured&theme=light" width=250 alt="Fazier badge" /></a>
 
-          <a href="https://findly.tools/flipclock?utm_source=flipclock" target="_blank">
-  <img loading="lazy"
-    src="https://findly.tools/badges/findly-tools-badge-light.svg" 
-    alt="Featured on findly.tools" 
-    width="150" 
-  />
-</a>
-<a href="https://www.siteswebdirectory.com/Health_Medical/Dentistry/">Dentists Marketing</a>
-<a href="https://www.promotebusinessdirectory.com/">Directory Website Promote</a>
+           <a href="https://findly.tools/flipclock?utm_source=flipclock" target="_blank">
+          <img loading="lazy"
+            src="https://findly.tools/badges/findly-tools-badge-light.svg" 
+            alt="Featured on findly.tools" 
+            width="150"/>
+          </a>
+          <a href="https://www.siteswebdirectory.com/Health_Medical/Dentistry/">Dentists Marketing</a>
+          <a href="https://www.promotebusinessdirectory.com/">Directory Website Promote</a>
 
 
           <!-- Add more icons as needed -->
@@ -1018,8 +1025,1047 @@ figure img.thumbnail {
       </div>
 
      <!-- ========================================================== -->
-   
+    <div id="imagePane" style="display: none;">
+      <div class="image-category">
+        <h2>Painting</h2>
+        <div class="thumbnail-grid">
+          <figure>
+            <!-- 3. 懒加载 / 4. 异步解码 / 5. 指定宽高防止抖动 -->
+            <img class="thumbnail" 
+            src="background/painting/thumbs/vincent-van-gogh-the-starry-night-1889.webp" 
+            data-full-src="background/painting/vincent-van-gogh-the-starry-night-1889.jpg" 
+            alt="The famous oil on canvas painting ’The Starry Night‘ by Post-Impressionist artist Vincent van Gogh, depicting a dramatic night sky with a swirling celestial body, a glowing crescent moon, and bright stars over a tranquil village." 
 
+            loading="lazy"      
+            decoding="async"    
+            width="320"    
+            height="180"        
+
+            role="button" 
+            tabindex="0">
+            <figcaption>The Starry Night</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/painting/thumbs/expressive-sunset-ocean-painting.webp" 
+            data-full-src="background/painting/expressive-sunset-ocean-painting.jpg" 
+            alt="An expressive, textured painting of a vibrant golden and orange sunset over the ocean, with the large sun casting a brilliant reflection on the water's surface." 
+            loading="lazy"      
+            decoding="async"    
+            width="320"    
+            height="180"        
+
+            role="button" 
+            tabindex="0">
+            <figcaption>Golden Sunset</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/painting/thumbs/expressive-moonrise-ocean-painting.webp" 
+            data-full-src="background/painting/expressive-moonrise-ocean-painting.jpg" 
+            alt="An expressive, textured painting in a post-impressionist style of a large yellow moon rising over a dark blue ocean, with the moonlight reflecting on the water's surface." 
+            loading="lazy"      
+            decoding="async"    
+            width="320"    
+            height="180"        
+
+            role="button" 
+            tabindex="0">
+            <figcaption>Midnight Moon</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/painting/thumbs/vincent-van-gogh-the-siesta-1890.webp" 
+            data-full-src="background/painting/vincent-van-gogh-the-siesta-1890.jpg" 
+            alt="The famous oil painting ’Noon: Rest from Work (after Millet)', also known as 'The Siesta', by Vincent van Gogh, depicting two peasants napping against a large haystack in a golden wheat field during the midday heat." 
+            loading="lazy"      
+            decoding="async"    
+            width="320"    
+            height="180"        
+
+            role="button" 
+            tabindex="0">
+            <figcaption>The Siesta (after Millet)</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/painting/thumbs/vincent-van-gogh-thatched-cottages-at-cordeville-1890.webp" 
+            data-full-src="background/painting/vincent-van-gogh-thatched-cottages-at-cordeville-1890.jpg" 
+            alt="The famous oil painting ‘Thatched Cottages at Cordeville‘ by Vincent van Gogh, depicting a vibrant and turbulent landscape with thatched-roof houses, swirling green trees, and a dramatic, expressive cloudy sky." 
+            loading="lazy"      
+            decoding="async"    
+            width="320"    
+            height="180"        
+
+            role="button" 
+            tabindex="0">
+            <figcaption>Thatched Cottages at Cordeville</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/painting/thumbs/vincent-van-gogh-view-of-arles-with-irises-1888.webp" 
+            data-full-src="background/painting/vincent-van-gogh-view-of-arles-with-irises-1888.jpg" 
+            alt="The famous oil painting 'View of Arles with Irises' by Vincent van Gogh, depicting a vibrant field of yellow flowers with purple irises in the foreground, and the French town of Arles visible in the distance." 
+            loading="lazy"      
+            decoding="async"    
+            width="320"    
+            height="180"        
+
+            role="button" 
+            tabindex="0">
+            <figcaption>View of Arles with Irises</figcaption>
+          </figure>
+          </div>
+        </div>
+
+        <div class="image-category">
+        <h2>Beach</h2>
+        <div class="thumbnail-grid">
+          <figure>
+            <img class="thumbnail" 
+            src="background/beach/thumbs/aerial-view-tropical-beach-turquoise-water.webp" 
+            data-full-src="background/beach/aerial-view-tropical-beach-turquoise-water.jpg" 
+            alt="A stunning top-down aerial view of a pristine tropical beach, showing gentle white waves washing onto the white sand shore next to crystal-clear turquoise water and lush palm trees." 
+            loading="lazy"      
+            decoding="async"    
+            width="320"    
+            height="180"        
+
+            role="button" 
+            tabindex="0">
+            <figcaption>Tropical Paradise</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/beach/thumbs/orange-starfish-on-sandy-beach-with-wave.webp" 
+            data-full-src="background/beach/orange-starfish-on-sandy-beach-with-wave.jpg" 
+            alt="A vibrant orange starfish resting on the wet sand of a sunny beach as the white foam of a gentle ocean wave washes up beside it." 
+            loading="lazy"      
+            decoding="async"    
+            width="320"    
+            height="180"        
+
+            role="button" 
+            tabindex="0">
+            <figcaption>Starfish on the Shore</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/beach/thumbs/aerial-view-couple-relaxing-canoe-turquoise-water.webp" 
+            data-full-src="background/beach/aerial-view-couple-relaxing-canoe-turquoise-water.jpg" 
+            alt="Top-down aerial view of a couple relaxing on a wooden canoe in crystal-clear, sparkling turquoise water on a sunny day." 
+            loading="lazy"      
+            decoding="async"    
+            width="320"    
+            height="180"        
+
+            role="button" 
+            tabindex="0">
+            <figcaption>Tropical Getaway</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/beach/thumbs/aerial-view-boats-snorkeling-in-tropical-bay.webp" 
+            data-full-src="background/beach/aerial-view-boats-snorkeling-in-tropical-bay.jpg" 
+            alt="Top-down aerial view of a tropical bay with colorful tour boats anchored in crystal-clear turquoise water as people snorkel and swim near a sandy beach." 
+            loading="lazy"      
+            decoding="async"    
+            width="320"    
+            height="180"        
+
+            role="button" 
+            tabindex="0">
+            <figcaption>Snorkeling Paradise</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/beach/thumbs/aerial-view-turquoise-wave-on-beach.webp" 
+            data-full-src="background/beach/aerial-view-turquoise-wave-on-beach.jpg" 
+            alt="Abstract top-down aerial view of a powerful turquoise ocean wave crashing and creating white foam on a pale sandy beach." 
+            loading="lazy"      
+            decoding="async"    
+            width="320"    
+            height="180"        
+
+            role="button" 
+            tabindex="0">
+            <figcaption>Ocean's Edge</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <div class="image-category">
+        <h2>Landscape</h2>
+        <div class="thumbnail-grid">
+          <figure>
+            <img class="thumbnail" 
+            src="background/landscape/thumbs/aerial-view-snowy-mountains-alpine-lake-sunrise.webp" 
+            data-full-src="background/landscape/aerial-view-snowy-mountains-alpine-lake-sunrise.jpg" 
+            alt="A spectacular aerial view of a snow-covered mountain range at sunrise, with a steep, rocky cliff in the foreground and a dark blue alpine lake nestled in the valley below." 
+            loading="lazy"      
+            decoding="async"    
+            width="320"    
+            height="180"        
+
+            role="button" 
+            tabindex="0">
+            <figcaption>Alpine Sunrise</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/landscape/thumbs/aerial-view-oahu-hawaii-koolau-mountains-coastline.webp" 
+            data-full-src="background/landscape/aerial-view-oahu-hawaii-koolau-mountains-coastline.jpg" 
+            alt="Stunning aerial panorama of the Koʻolau Mountain Range on the coast of Oahu, Hawaii, showing the dramatic green ridges meeting the vibrant turquoise Pacific Ocean." 
+            loading="lazy"      
+            decoding="async"    
+            width="320"    
+            height="180"        
+
+            role="button" 
+            tabindex="0">
+            <figcaption>Oahu Coastline</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/landscape/thumbs/torres-del-paine-patagonia-sunrise-alpenglow.webp" 
+            data-full-src="background/landscape/torres-del-paine-patagonia-sunrise-alpenglow.jpg" 
+            alt="The dramatic granite peaks of Torres del Paine National Park in Patagonia, glowing with fiery orange and red alpenglow during a stunning sunrise." 
+            loading="lazy"      
+            decoding="async"    
+            width="320"    
+            height="180"        
+
+            role="button" 
+            tabindex="0">
+            <figcaption>Patagonia Sunrise</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/landscape/thumbs/layered-blue-mountains-pastel-sunset.webp" 
+            data-full-src="background/landscape/layered-blue-mountains-pastel-sunset.jpg" 
+            alt="A serene view of layered blue mountain silhouettes fading into the distance under a beautiful pastel pink, orange, and blue sunset sky." 
+            loading="lazy"      
+            decoding="async"    
+            width="320"    
+            height="180"        
+
+            role="button" 
+            tabindex="0">
+            <figcaption>Mountain Dusk</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/landscape/thumbs/golden-grass-with-dew-drops-at-sunrise.webp" 
+            data-full-src="background/landscape/golden-grass-with-dew-drops-at-sunrise.jpg" 
+            alt="A dreamy close-up of delicate wild grass stalks covered in sparkling morning dew drops, backlit by the warm, golden light of a sunrise, creating a beautiful bokeh effect." 
+            loading="lazy"      
+            decoding="async"    
+            width="320"    
+            height="180"        
+
+            role="button" 
+            tabindex="0">
+            <figcaption>Golden Dew</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/landscape/thumbs/fairy-glen-isle-of-skye-scotland-sunset.webp" 
+            data-full-src="background/landscape/fairy-glen-isle-of-skye-scotland-sunset.jpg" 
+            alt="A vibrant, magical sunset over the Fairy Glen on the Isle of Skye, Scotland, featuring lush green hills, the iconic Castle Ewen rock formation, and a stone labyrinth in the foreground." 
+            loading="lazy"      
+            decoding="async"    
+            width="320"    
+            height="180"        
+
+            role="button" 
+            tabindex="0">
+            <figcaption>Fairy Glen Sunset</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/landscape/thumbs/autumn-aspen-forest-snowy-rocky-mountains.webp" 
+            data-full-src="background/landscape/autumn-aspen-forest-snowy-rocky-mountains.jpg" 
+            alt="A stunning autumn landscape in the Rocky Mountains, featuring a vibrant grove of golden aspen trees in the foreground and distant snow-capped peaks under a dramatic purple sunset sky." 
+            loading="lazy"      
+            decoding="async"    
+            width="320"    
+            height="180"        
+
+            role="button" 
+            tabindex="0">
+            <figcaption>Autumn in the Rockies</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/landscape/thumbs/mountain-meadow-with-wildflowers-at-sunset.webp" 
+            data-full-src="background/landscape/mountain-meadow-with-wildflowers-at-sunset.jpg" 
+            alt="A vibrant mountain meadow bursting with colorful summer wildflowers, including red Indian Paintbrush and yellow sunflowers, under a dramatic cloudy sunset." 
+            loading="lazy"      
+            decoding="async"    
+            width="320"    
+            height="180"        
+
+            role="button" 
+            tabindex="0">
+            <figcaption>Wildflower Meadow Sunset</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/landscape/thumbs/drangarnir-sea-stacks-faroe-islands-long-exposure.webp" 
+            data-full-src="background/landscape/drangarnir-sea-stacks-faroe-islands-long-exposure.jpg" 
+            alt="A dramatic long-exposure shot of the Drangarnir sea stacks and Tindhólmur islet in the Faroe Islands, with turbulent turquoise water swirling around the rocky coast under a stormy sky." 
+            loading="lazy"      
+            decoding="async"    
+            width="320"    
+            height="180"        
+
+            role="button" 
+            tabindex="0">
+            <figcaption>Drangarnir Sea Stacks</figcaption>
+          </figure>
+
+        </div>
+      </div>
+
+      <div class="image-category">
+        <h2>Starry Sky</h2>
+        <div class="thumbnail-grid">
+          
+          <figure>
+            <img class="thumbnail" 
+            src="background/starry-sky/thumbs/milky-way-galaxy-over-pine-forest-silhouette.webp" 
+            data-full-src="background/starry-sky/milky-way-galaxy-over-pine-forest-silhouette.jpg" 
+            alt="A breathtaking view of the Milky Way galaxy stretching across a brilliant, star-filled night sky, with the dark silhouette of a dense pine tree forest in the foreground." 
+            loading="lazy"      
+            decoding="async"    
+            width="320"    
+            height="180"        
+
+            role="button" 
+            tabindex="0">
+            <figcaption>Starry Forest</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/starry-sky/thumbs/matterhorn-mountain-at-night-starry-sky-switzerland.webp" 
+            data-full-src="background/starry-sky/matterhorn-mountain-at-night-starry-sky-switzerland.jpg" 
+            alt="A breathtaking night-time photograph of the iconic Matterhorn in the Swiss Alps, surrounded by a snow-covered landscape under a crystal-clear, star-filled sky." 
+            loading="lazy"      
+            decoding="async"    
+            width="320"    
+            height="180"        
+
+            role="button" 
+            tabindex="0">
+            <figcaption>Matterhorn at Night</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/starry-sky/thumbs/stargazer-silhouette-colorful-milky-way.webp" 
+            data-full-src="background/starry-sky/stargazer-silhouette-colorful-milky-way.jpg" 
+            alt="Awe-inspiring silhouette of a person standing on a hill, looking up at the vibrant, colorful arc of the Milky Way galaxy in a vast, star-filled night sky." 
+            loading="lazy"      
+            decoding="async"    
+            width="320"    
+            height="180"        
+
+            role="button" 
+            tabindex="0">
+            <figcaption>Stargazer</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/starry-sky/thumbs/aurora-borealis-over-snowy-winter-landscape.webp" 
+            data-full-src="background/starry-sky/aurora-borealis-over-snowy-winter-landscape.jpg" 
+            alt="Vibrant green and purple Aurora Borealis (Northern Lights) dancing across a star-filled sky over a vast, snowy winter landscape." 
+            loading="lazy"      
+            decoding="async"    
+            width="320"    
+            height="180"        
+
+            role="button" 
+            tabindex="0">
+            <figcaption>Northern Lights</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/starry-sky/thumbs/person-with-headlamp-watching-aurora-borealis.webp" 
+            data-full-src="background/starry-sky/person-with-headlamp-watching-aurora-borealis.jpg" 
+            alt="Silhouette of a person shining a headlamp up into a star-filled sky with the green and blue Aurora Borealis (Northern Lights) overhead in a dark valley." 
+            loading="lazy"      
+            decoding="async"    
+            width="320"    
+            height="180"        
+
+            role="button" 
+            tabindex="0">
+            <figcaption>Aurora Explorer</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/starry-sky/thumbs/green-aurora-borealis-reflection-over-lake.webp" 
+            data-full-src="background/starry-sky/green-aurora-borealis-reflection-over-lake.jpg" 
+            alt="A spectacular display of the green and purple Aurora Borealis (Northern Lights) dancing in a star-filled sky, perfectly reflecting over the calm water of a lake in front of a mountain silhouette." 
+            loading="lazy"      
+            decoding="async"    
+            width="320"    
+            height="180"        
+
+            role="button" 
+            tabindex="0">
+            <figcaption>Aurora Reflection</figcaption>
+          </figure>
+
+
+          </div>
+        </div>
+
+      <div class="image-category">
+        <h2>Animal</h2>
+        <div class="thumbnail-grid">
+          <figure>
+            <img class="thumbnail" 
+            src="background/animal/thumbs/happy-pembroke-welsh-corgi-on-grass.webp" 
+            data-full-src="background/animal/happy-pembroke-welsh-corgi-on-grass.jpg" 
+            alt="Pembroke Welsh Corgi puppy smiling and lying down on green grass in a park at sunset" 
+            loading="lazy"      
+            decoding="async"    
+            width="320"    
+            height="180"        
+
+            role="button" 
+            tabindex="0">
+            <figcaption>Happy Corgi</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/animal/thumbs/pembroke-welsh-corgi-playing-with-ball-in-park.webp" 
+            data-full-src="background/animal/pembroke-welsh-corgi-playing-with-ball-in-park.jpg" 
+            alt="A playful Pembroke Welsh Corgi running on grass towards the camera while holding a blue ball in its mouth, with a city park in the background" 
+            loading="lazy"      
+            decoding="async"    
+            width="320"    
+            height="180"        
+
+            role="button" 
+            tabindex="0">
+            <figcaption>Playful Corgi</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/animal/thumbs/clownfish-in-pink-sea-anemone.webp" 
+            data-full-src="background/animal/clownfish-in-pink-sea-anemone.jpg" 
+            alt="Vibrant orange and white clownfish peeking out from the tentacles of a glowing pink and purple sea anemone against a dark background" 
+            loading="lazy"      
+            decoding="async"    
+            width="320"    
+            height="180"        
+
+            role="button" 
+            tabindex="0">
+            <figcaption>Clownfish in Anemone</figcaption>
+          </figure>
+          <figure>
+            <img class="thumbnail" 
+            src="background/animal/thumbs/red-fox-standing-in-snow-at-sunset.webp" 
+            data-full-src="background/animal/red-fox-standing-in-snow-at-sunset.jpg" 
+            alt="A majestic red fox stands alert on a snowy hill, its orange fur glowing in the warm light of the setting sun against a cool blue background." 
+            loading="lazy"      
+            decoding="async"    
+            width="320"    
+            height="180"        
+
+            role="button" 
+            tabindex="0">
+            <figcaption>Winter Fox</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/animal/thumbs/fancy-goldfish-swimming-black-background.webp" 
+            data-full-src="background/animal/fancy-goldfish-swimming-black-background.jpg" 
+            alt="An elegant orange and white fancy goldfish with flowing fins swimming gracefully, isolated against a solid black background." 
+            loading="lazy"      
+            decoding="async"    
+            width="320"    
+            height="180"        
+
+            role="button" 
+            tabindex="0">
+            <figcaption>Elegant Goldfish</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/animal/thumbs/green-sea-turtle-swimming-in-ocean.webp" 
+            data-full-src="background/animal/green-sea-turtle-swimming-in-ocean.jpg" 
+            alt="A majestic green sea turtle gliding gracefully through the clear, deep blue water of the open ocean." 
+            loading="lazy"      
+            decoding="async"    
+            width="320"    
+            height="180"        
+
+            role="button" 
+            tabindex="0">
+            <figcaption>Swimming Sea Turtle</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/animal/thumbs/tabby-cat-with-blue-eyes-portrait.webp" 
+            data-full-src="background/animal/tabby-cat-with-blue-eyes-portrait.jpg" 
+            alt="A dramatic close-up portrait of a tabby point cat with intense blue eyes, looking directly at the camera against a solid black background." 
+            loading="lazy"      
+            decoding="async"    
+            width="320"    
+            height="180"        
+
+            role="button" 
+            tabindex="0">
+            <figcaption>Blue-Eyed Cat</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/animal/thumbs/orange-and-white-cat-sitting-on-sunny-floor.webp" 
+            data-full-src="background/animal/orange-and-white-cat-sitting-on-sunny-floor.jpg" 
+            alt="An adorable orange and white cat sitting on a hardwood floor in a patch of sunlight, looking up at the camera with a curious head tilt." 
+            loading="lazy"      
+            decoding="async"    
+            width="320"    
+            height="180"        
+
+            role="button" 
+            tabindex="0">
+            <figcaption>Curious Cat</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/animal/thumbs/long-haired-tabby-cat-peeking-white-background.webp" 
+            data-full-src="background/animal/long-haired-tabby-cat-peeking-white-background.jpg" 
+            alt="A beautiful long-haired brown tabby cat with stunning green eyes peeking up from the bottom of the frame, isolated on a minimalist white background." 
+            loading="lazy"      
+            decoding="async"    
+            width="320"    
+            height="180"        
+
+            role="button" 
+            tabindex="0">
+            <figcaption>Peeking Cat</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/animal/thumbs/orange-flamingo-portrait-black-background.webp" 
+            data-full-src="background/animal/orange-flamingo-portrait-black-background.jpg" 
+            alt="A dramatic close-up portrait of a vibrant orange flamingo's head and neck, isolated against a solid black background." 
+            loading="lazy"      
+            decoding="async"    
+            width="320"    
+            height="180"        
+
+            role="button" 
+            tabindex="0">
+            <figcaption>Flamingo Portrait</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/animal/thumbs/black-and-white-cat-on-bamboo-green-background.webp" 
+            data-full-src="background/animal/black-and-white-cat-on-bamboo-green-background.jpg" 
+            alt="A handsome black and white tuxedo cat with green eyes rests its paws on a bamboo ledge, looking calmly at the camera against a solid green background." 
+            loading="lazy"      
+            decoding="async"    
+            width="320"    
+            height="180"        
+
+            role="button" 
+            tabindex="0">
+            <figcaption>Poised Cat</figcaption>
+          </figure>
+          </div>
+        </div>
+
+      <div class="image-category">
+        <h2>Beauty</h2>
+        <div class="thumbnail-grid">
+          <figure>
+            <img class="thumbnail" 
+            src="background/beauty/thumbs/woman-in-black-swimsuit-lounging-seaside.webp" 
+            data-full-src="background/beauty/woman-in-black-swimsuit-lounging-seaside.jpg" 
+            alt="A beautiful woman in a stylish black one-piece swimsuit lounging elegantly on a daybed, with a serene and minimalist background of the sea and sky." 
+            loading="lazy"      
+            decoding="async"    
+            width="320"    
+            height="180"        
+
+            role="button" 
+            tabindex="0">
+            <figcaption>Seaside Serenity</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/beauty/thumbs/troy-trojans-cheerleader-performing-at-game.webp" 
+            data-full-src="background/beauty/troy-trojans-cheerleader-performing-at-game.jpg" 
+            alt="An enthusiastic Troy Trojans cheerleader with a yellow bow in her blonde hair, smiling and raising white pom-poms to energize the crowd at a football game." 
+            loading="lazy"      
+            decoding="async"    
+            width="320"    
+            height="180"        
+
+            role="button" 
+            tabindex="0">
+            <figcaption>Game Day Spirit</figcaption>
+          </figure>
+        </div>
+      </div>
+
+    
+
+        <div class="image-category">
+        <h2>abstract</h2>
+        <div class="thumbnail-grid">
+          <figure>
+            <img class="thumbnail" 
+            src="background/abstract/thumbs/abstract-neon-curves-blue-purple.webp" 
+            data-full-src="background/abstract/abstract-neon-curves-blue-purple.jpg" 
+            alt="A dynamic abstract 3D render of sleek, curved, glossy shapes illuminated by vibrant neon blue and purple lights against a dark background." 
+            loading="lazy"      
+            decoding="async"    
+            width="320"    
+            height="180"        
+
+            role="button" 
+            tabindex="0">
+            <figcaption>Neon Curves</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/abstract/thumbs/abstract-light-vortex-purple-pink.webp" 
+            data-full-src="background/abstract/abstract-light-vortex-purple-pink.jpg" 
+            alt="A vibrant abstract long-exposure photograph of swirling light trails, creating a dynamic vortex of bright purple, blue, and pink neon colors." 
+            loading="lazy"      
+            decoding="async"    
+            width="320"    
+            height="180"        
+
+            role="button" 
+            tabindex="0">
+            <figcaption>Light Vortex</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/abstract/thumbs/abstract-golden-bronze-curves-background.webp" 
+            data-full-src="background/abstract/abstract-golden-bronze-curves-background.jpg" 
+            alt="An elegant abstract background featuring layers of smooth, concentric curves in warm, metallic bronze and gold tones, flowing into a dark, shadowy space." 
+            loading="lazy"      
+            decoding="async"    
+            width="320"    
+            height="180"        
+
+            role="button" 
+            tabindex="0">
+            <figcaption>Golden Curves</figcaption>
+          </figure>
+
+          </div>
+        </div>
+
+        <div class="image-category">
+        <h2>car</h2>
+        <div class="thumbnail-grid">
+          <figure>
+            <img class="thumbnail" 
+            src="background/car/thumbs/black-porsche-panamera-turbo-driving-on-highway.webp" 
+            data-full-src="background/car/black-porsche-panamera-turbo-driving-on-highway.jpg" 
+            alt="A sleek black Porsche Panamera Turbo captured in a motion shot as it drives on a highway at dusk, with its distinctive red LED taillight bar illuminated." 
+            loading="lazy"      
+            decoding="async"    
+            width="320"    
+            height="180"        
+
+            role="button" 
+            tabindex="0">
+            <figcaption>Panamera in Motion</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/car/thumbs/dark-gray-steeda-ford-mustang-rooftop.webp" 
+            data-full-src="background/car/dark-gray-steeda-ford-mustang-rooftop.jpg" 
+            alt="An aggressively styled, dark gray Steeda Ford Mustang parked head-on in a rooftop parking lot under a dramatic, cloudy sky." 
+            loading="lazy"      
+            decoding="async"    
+            width="320"    
+            height="180"        
+
+            role="button" 
+            tabindex="0">
+            <figcaption>Steeda Mustang</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/car/thumbs/blue-bmw-4-series-parked-urban-street.webp" 
+            data-full-src="background/car/blue-bmw-4-series-parked-urban-street.jpg" 
+            alt="A vibrant Estoril Blue BMW 4 Series coupe parked on an urban street in front of a gray brick building with an 'ENTRANCE' sign." 
+            loading="lazy"      
+            decoding="async"    
+            width="320"    
+            height="180"        
+
+            role="button" 
+            tabindex="0">
+            <figcaption>Urban Elegance</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/car/thumbs/yellow-lamborghini-huracan-parked-on-city-street.webp" 
+            data-full-src="background/car/yellow-lamborghini-huracan-parked-on-city-street.jpg" 
+            alt="A striking yellow Lamborghini Huracán with black wheels parked on a city street on a sunny day, with lush green trees in the background." 
+            loading="lazy"      
+            decoding="async"    
+            width="320"    
+            height="180"        
+
+            role="button" 
+            tabindex="0">
+            <figcaption>Yellow Supercar</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/car/thumbs/matte-gray-audi-r8-on-mountain-road-at-sunset.webp" 
+            data-full-src="background/car/matte-gray-audi-r8-on-mountain-road-at-sunset.jpg" 
+            alt="A stunning matte gray Audi R8 supercar with custom black and bronze wheels parked on a winding mountain road during a beautiful sunset." 
+            loading="lazy"      
+            decoding="async"    
+            width="320"    
+            height="180"        
+
+            role="button" 
+            tabindex="0">
+            <figcaption>R8 at Sunset</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/car/thumbs/silver-mclaren-720s-at-norwegian-sod-roof-houses.webp" 
+            data-full-src="background/car/silver-mclaren-720s-at-norwegian-sod-roof-houses.jpg" 
+            alt="A silver McLaren 720S supercar with white racing stripes and a wedding bow on the mirror, parked in front of traditional Norwegian houses with green sod roofs." 
+            loading="lazy"      
+            decoding="async"    
+            width="320"    
+            height="180"        
+
+            role="button" 
+            tabindex="0">
+            <figcaption>Nordic Supercar</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/car/thumbs/mercedes-benz-cls-class-profile-shot-black-and-white.webp" 
+            data-full-src="background/car/mercedes-benz-cls-class-profile-shot-black-and-white.jpg" 
+            alt="An elegant black and white studio-style profile shot of a Mercedes-Benz CLS-Class luxury coupe, with dramatic lighting sculpting its sleek body lines against a solid black background." 
+            loading="lazy"      
+            decoding="async"    
+            width="320"    
+            height="180"        
+
+            role="button" 
+            tabindex="0">
+            <figcaption>CLS Silhouette</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/car/thumbs/modified-jeep-grand-cherokee-off-road-snowy-mountain.webp" 
+            data-full-src="background/car/modified-jeep-grand-cherokee-off-road-snowy-mountain.jpg" 
+            alt="A heavily modified, mud-covered white Jeep Grand Cherokee equipped for off-roading, parked in a rugged landscape with a large, snow-capped mountain in the background." 
+            loading="lazy"      
+            decoding="async"    
+            width="320"    
+            height="180"        
+
+            role="button" 
+            tabindex="0">
+            <figcaption>Mountain Explorer</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/car/thumbs/san-marino-blue-bmw-m4-in-garage.webp" 
+            data-full-src="background/car/san-marino-blue-bmw-m4-in-garage.jpg" 
+            alt="A stunning San Marino Blue BMW M4 coupe with a carbon fiber roof and aero parts, covered in water droplets and parked inside a modern garage." 
+            loading="lazy"      
+            decoding="async"    
+            width="320"    
+            height="180"        
+
+            role="button" 
+            tabindex="0">
+            <figcaption>Blue M4 Beast</figcaption>
+          </figure>
+
+          </div>
+        </div>
+
+        
+
+        <div class="image-category">
+        <h2>Building</h2>
+        <div class="thumbnail-grid">
+          
+          <figure>
+            <img class="thumbnail" 
+            src="background/building/thumbs/gold-coast-australia-skyline-at-dusk.webp" 
+            data-full-src="background/building/gold-coast-australia-skyline-at-dusk.jpg" 
+            alt="A stunning photograph of the Gold Coast, Australia skyline at dusk, with the illuminated skyscrapers of Surfers Paradise, including the iconic Q1 tower, reflecting in the calm water." 
+            loading="lazy"      
+            decoding="async"    
+            width="320"    
+            height="180"        
+
+            role="button" 
+            tabindex="0">
+            <figcaption>Gold Coast at Dusk</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/building/thumbs/miami-florida-skyline-at-sunset.webp" 
+            data-full-src="background/building/miami-florida-skyline-at-sunset.jpg" 
+            alt="A beautiful panoramic view of the downtown Miami, Florida skyline with its illuminated skyscrapers reflecting on the water at sunset, under a dramatic pastel pink and blue cloudy sky." 
+            loading="lazy"      
+            decoding="async"    
+            width="320"    
+            height="180"        
+
+            role="button" 
+            tabindex="0">
+            <figcaption>Miami Skyline at Sunset</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/building/thumbs/new-york-city-manhattan-skyline-sunset-east-river.webp" 
+            data-full-src="background/building/new-york-city-manhattan-skyline-sunset-east-river.jpg" 
+            alt="A dramatic sunset over the Midtown Manhattan skyline in New York City, with iconic buildings like the Empire State Building and Chrysler Building illuminated and reflecting on the East River." 
+            loading="lazy"      
+            decoding="async"    
+            width="320"    
+            height="180"        
+
+            role="button" 
+            tabindex="0">
+            <figcaption>Manhattan Sunset</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/building/thumbs/chicago-skyline-aerial-view-lake-michigan-sunset.webp" 
+            data-full-src="background/building/chicago-skyline-aerial-view-lake-michigan-sunset.jpg" 
+            alt="A stunning high-angle aerial view of the downtown Chicago skyline at sunset, with iconic skyscrapers like the John Hancock Center set against the vast expanse of Lake Michigan." 
+            loading="lazy"      
+            decoding="async"    
+            width="320"    
+            height="180"        
+
+            role="button" 
+            tabindex="0">
+            <figcaption>Chicago Skyline at Sunset</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/building/thumbs/shenzhen-shun-hing-square-skyscraper-at-night-with-moon.webp" 
+            data-full-src="background/building/shenzhen-shun-hing-square-skyscraper-at-night-with-moon.jpg" 
+            alt="A low-angle nighttime photograph of the illuminated Shun Hing Square skyscraper in Shenzhen, China, with a crescent moon visible in the deep blue twilight sky." 
+            loading="lazy"      
+            decoding="async"    
+            width="320"    
+            height="180"        
+
+            role="button" 
+            tabindex="0">
+            <figcaption>Shenzhen Moon</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/building/thumbs/low-angle-view-of-skyscrapers-at-night.webp" 
+            data-full-src="background/building/low-angle-view-of-skyscrapers-at-night.jpg" 
+            alt="A dramatic low-angle, worm's-eye view looking up at the dark night sky framed by the corners of four modern skyscrapers with glowing blue and white architectural lights." 
+            loading="lazy"      
+            decoding="async"    
+            width="320"    
+            height="180"        
+
+            role="button" 
+            tabindex="0">
+            <figcaption>Urban Canyon</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/building/thumbs/modern-white-building-repeating-windows-blue-sky.webp" 
+            data-full-src="background/building/modern-white-building-repeating-windows-blue-sky.jpg" 
+            alt="A low-angle photograph of a modern white building with a repeating pattern of rectangular windows set against a clear, deep blue sky." 
+            loading="lazy"      
+            decoding="async"    
+            width="320"    
+            height="180"        
+
+            role="button" 
+            tabindex="0">
+            <figcaption>Minimalist Architecture</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/building/thumbs/modern-building-angled-windows-blue-sky.webp" 
+            data-full-src="background/building/modern-building-angled-windows-blue-sky.jpg" 
+            alt="A dynamic low-angle, diagonal shot of a modern architectural facade, showing a repeating pattern of white horizontal lines and angled glass windows against a clear, vibrant blue sky." 
+            loading="lazy"      
+            decoding="async"    
+            width="320"    
+            height="180"        
+
+            role="button" 
+            tabindex="0">
+            <figcaption>Architectural Lines</figcaption>
+          </figure>
+          </div>
+        </div>
+
+        <div class="image-category">
+        <h2>Christmas</h2>
+        <div class="thumbnail-grid">
+          
+          <figure>
+            <img class="thumbnail" 
+            src="background/christmas/thumbs/merry-christmas-snowy-night-church-sleigh.webp" 
+            data-full-src="background/christmas/merry-christmas-snowy-night-church-sleigh.jpg" 
+            alt="A festive ‘Merry Christmas‘ greeting card design featuring a magical snowy winter landscape at night, with a full moon, a charming church, and a silhouette of Santa's sleigh." 
+            loading="lazy"      
+            decoding="async"    
+            width="320"    
+            height="180"        
+
+            role="button" 
+            tabindex="0">
+            <figcaption>Christmas Eve Magic</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/christmas/thumbs/black-spiral-christmas-ornament-with-star-lights.webp" 
+            data-full-src="background/christmas/black-spiral-christmas-ornament-with-star-lights.jpg" 
+            alt="A moody, close-up photograph of a unique black spiral Christmas ornament hanging on a tree, with warm, glowing star-shaped fairy lights in the background." 
+            loading="lazy"      
+            decoding="async"    
+            width="320"    
+            height="180"        
+
+            role="button" 
+            tabindex="0">
+            <figcaption>Elegant Christmas</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/christmas/thumbs/red-and-gold-christmas-ornaments-on-tree.webp" 
+            data-full-src="background/christmas/red-and-gold-christmas-ornaments-on-tree.jpg" 
+            alt="A warm, festive close-up of a Christmas tree decorated with a red snowflake ornament, reflective gold and silver baubles, and sparkling gold tinsel." 
+            loading="lazy"      
+            decoding="async"    
+            width="320"    
+            height="180"        
+
+            role="button" 
+            tabindex="0">
+            <figcaption>Classic Christmas</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/christmas/thumbs/silver-glitter-snowflake-christmas-ornament.webp" 
+            data-full-src="background/christmas/silver-glitter-snowflake-christmas-ornament.jpg" 
+            alt="A beautiful close-up of a sparkling silver glitter snowflake ornament hanging on a Christmas tree, with warm, out-of-focus lights creating a magical bokeh effect." 
+            loading="lazy"      
+            decoding="async"    
+            width="320"    
+            height="180"        
+
+            role="button" 
+            tabindex="0">
+            <figcaption>Sparkling Snowflake</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/christmas/thumbs/christmas-flat-lay-with-gifts-and-decorations.webp" 
+            data-full-src="background/christmas/christmas-flat-lay-with-gifts-and-decorations.jpg" 
+            alt="A festive Christmas flat lay featuring wrapped gifts, a red ribbon, pine cones, and gold decorations arranged as a border on a dark green background, leaving empty copy space in the center." 
+            loading="lazy"      
+            decoding="async"    
+            width="320"    
+            height="180"        
+
+            role="button" 
+            tabindex="0">
+            <figcaption>Christmas Flat Lay</figcaption>
+          </figure>
+
+          <figure>
+            <img class="thumbnail" 
+            src="background/christmas/thumbs/cozy-christmas-flat-lay-wooden-background.webp" 
+            data-full-src="background/christmas/cozy-christmas-flat-lay-wooden-background.jpg" 
+            alt="A cozy Christmas flat lay on a wooden background, featuring a blank piece of paper in the center framed by candy canes, dried oranges, pine cones, cinnamon sticks, a rustic gift, and warm fairy lights." 
+            loading="lazy"      
+            decoding="async"    
+            width="320"    
+            height="180"        
+
+            role="button" 
+            tabindex="0">
+            <figcaption>Cozy Christmas</figcaption>
+          </figure>
+
+          </div>
+        </div>
+
+        
 
     </div>
 
@@ -1027,7 +2073,6 @@ figure img.thumbnail {
     </div>
 
   </div>
-  
 
   </aside>
 
@@ -1385,25 +2430,66 @@ const FONT_COLORS = [
 
 ];
 
+/* ===== 新增逻辑：处理静态图片背景的交互 ===== */
+
+const imagePane = document.getElementById('imagePane');
+const thumbnails = document.querySelectorAll('.thumbnail');
 
 
+
+// 1. 在整个图片容器上监听点击事件（事件委托）
+imagePane.addEventListener('click', (e) => {
+  // 2. 检查被点击的是否是我们的缩略图
+  if (e.target.classList.contains('thumbnail')) {
+    const clickedThumb = e.target;
+    const fullSrc = clickedThumb.dataset.fullSrc; // 获取大图路径
+
+    // 3. 应用背景图片
+    document.body.style.backgroundImage = `url('${fullSrc}')`;
+    document.body.style.backgroundSize = 'cover';
+    document.body.style.backgroundPosition = 'center';
+    document.body.style.backgroundRepeat = 'no-repeat';
+    document.documentElement.style.setProperty('--theme-bg', 'transparent'); // 移除纯色背景
+
+    // 4. 保存用户的选择
+    try {
+      localStorage.setItem('flip.theme.bgImage', fullSrc);
+      localStorage.removeItem('flip.theme.bg'); // 清除之前保存的纯色背景
+    } catch (err) {}
+  }
+});
+
+// 为无障碍访问添加键盘支持
+imagePane.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') { // 当用户按回车或空格时
+        if (e.target.classList.contains('thumbnail')) {
+            e.preventDefault(); // 阻止按空格时页面滚动
+            e.target.click(); // 模拟一次点击
+        }
+    }
+});
 
 
 function renderTabContent() {
   const topicsList  = document.getElementById('topicsList');  // BG / FONT 的色板容器
   const aboutPane   = document.getElementById('aboutPane');
+  const imagePane   = document.getElementById('imagePane');
   const linksPane   = document.getElementById('linksPane');   // NEW
   const contactPane = document.getElementById('contactPane'); // NEW
 
   // 统一隐藏
   if (topicsList)  topicsList.style.display  = 'none';
   if (aboutPane)   aboutPane.style.display   = 'none';
+  if (imagePane)   imagePane.style.display   = 'none';
   if (linksPane)   linksPane.style.display   = 'none';
   if (contactPane) contactPane.style.display = 'none';
 
   // 分支显示
   if (currentTab === 'about') {
     if (aboutPane) aboutPane.style.display = 'block';
+
+  } else if (currentTab === 'image') {
+    if (imagePane) imagePane.style.display = 'block';
 
   } else if (currentTab === 'links') {
     if (linksPane) linksPane.style.display = 'block';
