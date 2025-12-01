@@ -154,6 +154,8 @@
       /*font-weight: 700;*/
       /*font-family: 'Satoshi', sans-serif;*/
       /*font-family: 'Satoshi', sans-serif;*/
+      transition: background-image 0.5s ease-in-out; /* 这一行对图片背景通常无效，但在部分浏览器有奇效，可以先加上 */
+
     }
     
    .clock{display:flex;align-items:center;gap:clamp(8px,2vw,14px)}
@@ -2444,18 +2446,46 @@ imagePane.addEventListener('click', (e) => {
     const clickedThumb = e.target;
     const fullSrc = clickedThumb.dataset.fullSrc; // 获取大图路径
 
-    // 3. 应用背景图片
-    document.body.style.backgroundImage = `url('${fullSrc}')`;
-    document.body.style.backgroundSize = 'cover';
-    document.body.style.backgroundPosition = 'center';
-    document.body.style.backgroundRepeat = 'no-repeat';
-    document.documentElement.style.setProperty('--theme-bg', 'transparent'); // 移除纯色背景
+       // === ✨ 新增：优化体验代码开始 ===
+    
+    // A. 给用户一点反馈 (可选：让鼠标变成等待状态，防止用户以为没反应)
+    document.body.style.cursor = 'wait';
+    clickedThumb.style.opacity = '0.5'; // 让被点的缩略图变暗一点，表示“正在处理”
 
-    // 4. 保存用户的选择
-    try {
-      localStorage.setItem('flip.theme.bgImage', fullSrc);
-      localStorage.removeItem('flip.theme.bg'); // 清除之前保存的纯色背景
-    } catch (err) {}
+    // B. 创建一个临时的 Image 对象在后台下载
+    const loader = new Image();
+    loader.src = fullSrc;
+
+    // C. 监听下载完成事件
+    loader.onload = () => {
+      // 图片下载好了！现在切换背景，也是瞬间完成，不会白屏
+      document.body.style.backgroundImage = `url('${fullSrc}')`;
+      
+      // 设置样式，移除纯色背景
+      document.body.style.backgroundSize = 'cover';
+      document.body.style.backgroundPosition = 'center';
+      document.body.style.backgroundRepeat = 'no-repeat';
+      document.documentElement.style.setProperty('--theme-bg', 'transparent'); 
+
+      // 恢复鼠标和缩略图状态
+      document.body.style.cursor = 'default';
+      clickedThumb.style.opacity = '1';
+
+      // 保存设置 (移动到这里，确保成功加载后再保存)
+      try {
+        localStorage.setItem('flip.theme.bgImage', fullSrc);
+        localStorage.removeItem('flip.theme.bg');
+      } catch (err) {}
+    };
+
+    // D. (可选) 处理加载失败的情况
+    loader.onerror = () => {
+        document.body.style.cursor = 'default';
+        clickedThumb.style.opacity = '1';
+        // console.log('图片加载失败');
+    };
+
+    // === ✨ 新增代码结束 ===
   }
 });
 
