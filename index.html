@@ -134,15 +134,6 @@
 }
 </script>
 
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-V2S2N6PXRP"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-V2S2N6PXRP');
-</script>
 
 
   <style>
@@ -1031,7 +1022,8 @@ figure img.thumbnail {
           <a href="https://dang.ai/" target="_blank" ><img loading="lazy" loading="lazy" src="https://cdn.prod.website-files.com/63d8afd87da01fb58ea3fbcb/6487e2868c6c8f93b4828827_dang-badge.png" alt="Dang.ai" style="width: 150px; height: 54px;" width="150" height="54"/></a>
           <a href="https://saasfame.com/item/flipclock-info" target="_blank" rel="noopener noreferrer">
           <img loading="lazy" src="https://saasfame.com/badge-light.svg" alt="Featured on saasfame.com" style="height: 54px; width: auto;" /></a>
-          <a href="https://startupfa.me/s/flipclock.info?utm_source=flipclock.info" target="_blank"><img loading="lazy" src="https://startupfa.me/badges/featured-badge-small.webp" alt="flipclock.info - Featured on Startup Fame" width="224" height="36" /></a>
+
+          <a href="https://startupfa.me/s/flipclock.info?utm_source=flipclock.info" target="_blank"><img loading="lazy" src="https://startupfa.me/badges/featured-badge.webp" alt="flipclock.info - Featured on Startup Fame" width="171" height="54" /></a>
 
            <a href="https://fazier.com/launches/flipclock.info" target="_blank"><img loading="lazy" src="https://fazier.com/api/v1//public/badges/launch_badges.svg?badge_type=featured&theme=light" width=250 alt="Fazier badge" /></a>
 
@@ -1041,6 +1033,7 @@ figure img.thumbnail {
             alt="Featured on findly.tools" 
             width="150"/>
           </a>
+          <a href="https://www.producthunt.com/products/flipclock?embed=true&utm_source=badge-featured&utm_medium=badge&utm_source=badge-flipclock" target="_blank"><img loading="lazy" src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1041575&theme=neutral&t=1764583861806" alt="FlipClock - FlipClock&#0032;&#0124;&#0032;Minimal&#0032;Online&#0032;Flip&#0032;Clock&#0032;with&#0032;Seconds&#0032;&#0038;&#0032;Themes | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
           <a href="https://www.siteswebdirectory.com/Health_Medical/Dentistry/">Dentists Marketing</a>
           <a href="https://www.promotebusinessdirectory.com/">Directory Website Promote</a>
 
@@ -2589,6 +2582,42 @@ renderTabContent();
 
 </script>
 
+<!-- 延迟加载 Google Analytics (GA4) -->
+<script>
+  // 初始化 dataLayer，防止报错
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+
+  let gaLoaded = false;
+
+  function loadGA() {
+    if (gaLoaded) return;
+    gaLoaded = true;
+
+    // 创建 script 标签
+    const script = document.createElement('script');
+    script.src = 'https://www.googletagmanager.com/gtag/js?id=G-V2S2N6PXRP';
+    script.async = true;
+    document.head.appendChild(script);
+
+    // 初始化 GA 配置
+    gtag('js', new Date());
+    gtag('config', 'G-V2S2N6PXRP');
+    
+    // 移除监听器，释放内存
+    window.removeEventListener('scroll', loadGA);
+    window.removeEventListener('mousemove', loadGA);
+    window.removeEventListener('touchstart', loadGA);
+  }
+
+  // 监听用户交互事件 (PC + Mobile)
+  window.addEventListener('scroll', loadGA, { passive: true });
+  window.addEventListener('mousemove', loadGA);
+  window.addEventListener('touchstart', loadGA);
+
+  // 保底策略：如果用户不动，4秒后自动加载，保证数据不丢失太多
+  setTimeout(loadGA, 4000);
+</script>
 
 
 </body>
