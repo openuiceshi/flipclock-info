@@ -2480,6 +2480,8 @@ imagePane.addEventListener('click', (e) => {
   if (e.target.classList.contains('thumbnail')) {
     const clickedThumb = e.target;
     const fullSrc = clickedThumb.dataset.fullSrc; // 获取大图路径
+    const parentFigure = clickedThumb.closest('figure');
+
 
     // 标记是否加载完成
     let isLoaded = false;
